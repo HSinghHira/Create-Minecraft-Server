@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VanguardRanks Generator - Create Minecraft Server Ranks</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>💎</text></svg>">
+    </link>
+    <meta name="description"
+        content="VanguardRanks Generator is a free tool to create and manage Minecraft server ranks. Customize ranks, requirements, and commands with ease.">
+    <meta name="keywords"
+        content="VanguardRanks Generator, Minecraft ranks, server rank generator, Harman Singh Hira, Minecraft server tool, rank management, YAML generator, LuckPerms">
+    <meta name="author" content="Harman Singh Hira">
+    <meta name="robots" content="index, follow">
+
+    <!-- Schema Markup for SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "VanguardRanks Generator - Create Minecraft Server Ranks",
+      "operatingSystem": "Web",
+      "applicationCategory": "Utility",
+      "description": "VanguardRanks Generator is a free tool to create and manage Minecraft server ranks. Customize ranks, requirements, and commands with ease.",
+      "author": {
+        "@type": "Person",
+        "name": "Harman Singh Hira"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --bg-primary: #37353E;
+            --bg-secondary: #44444E;
+            --accent-primary: #715A5A;
+            --accent-light: #D3DAD9;
+            --text-primary: #f7fafc;
+            --text-muted: #a0aec0;
+            --card-bg: #44444E;
+        }
+
+        * {
+            font-family: 'Inter', sans-serif;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            padding: 28px;
+            min-height: 100vh;
+            background-attachment: fixed;
+            /* optional, keeps background stable */
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+            transition: all 0.22s;
+        }
+
+        .btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-primary);
+            transition: all 0.2s;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            transform: scale(1.03);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--accent-light);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-light));
+            color: var(--text-primary);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: scale(1.03);
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--text-primary);
+            transition: all 0.2s;
+
+        }
+
+        textarea {
+            padding: 10px !important;
+
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent-light);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .tab-button {
+            padding: 10px 20px;
+            background: rgb(55 65 81 / 0.5);
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-light));
+            color: var(--text-primary);
+            border-color: transparent;
+        }
+
+        .tab-button:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-light));
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--accent-light), var(--accent-primary));
+        }
+
+        .rank-item {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            padding: 16px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid transparent;
+            margin-bottom: 10px;
+        }
+
+        .rank-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(5px);
+        }
+
+        .rank-item.active {
+            background: linear-gradient(135deg, rgba(113, 90, 90, 0.3), rgba(211, 218, 217, 0.3));
+            border-color: var(--accent-light);
+        }
+
+        .requirement-badge {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-light));
+            color: var(--text-primary);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .icon-type-btn {
+            padding: 12px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-muted);
+        }
+
+        .icon-type-btn.active {
+            background: linear-gradient(135deg, rgba(113, 90, 90, 0.3), rgba(211, 218, 217, 0.3));
+            border-color: var(--accent-light);
+            color: var(--text-primary);
+        }
+
+        .icon-type-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 28px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 980px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 220px;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            text-align: center;
+            border-radius: 8px;
+            padding: 8px;
+            position: absolute;
+            z-index: 99;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -110px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        h1 {
+            font-size: 32px !important;
+            margin: 0 0 8px 0 !important;
+            font-weight: 700 !important;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin: 0 0 16px 0;
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 18px;
+            margin: 0 0 12px 0;
+            font-weight: 600;
+        }
+
+        .header-meta {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 32px;">
+            <div
+                style="display: inline-block; padding: 16px; background: rgba(255,255,255,0.05); border-radius: 16px; margin-bottom: 16px;">
+                <svg style="width: 64px; height: 64px; color: var(--accent-light);" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path
+                        d="M13.3 8.1101L14.62 10.7501C14.8 11.1101 15.28 11.4701 15.68 11.5301L18.07 11.9301C19.6 12.1901 19.96 13.2901 18.86 14.3901L17 16.2501C16.69 16.5601 16.51 17.1701 16.61 17.6101L17.14 19.9201C17.56 21.7401 16.59 22.4501 14.98 21.5001L12.74 20.1701C12.33 19.9301 11.67 19.9301 11.26 20.1701L9.01996 21.5001C7.40996 22.4501 6.43995 21.7401 6.85995 19.9201L7.38998 17.6101C7.48998 17.1801 7.30997 16.5701 6.99997 16.2501L5.13998 14.3901C4.03998 13.2901 4.39996 12.1801 5.92996 11.9301L8.31997 11.5301C8.71997 11.4601 9.19997 11.1101 9.37997 10.7501L10.7 8.1101C11.41 6.6801 12.59 6.6801 13.3 8.1101Z"
+                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path opacity="0.4" d="M6 9V2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round"></path>
+                    <path opacity="0.4" d="M18 9V2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round"></path>
+                    <path opacity="0.4" d="M12 4V2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round"></path>
+                </svg>
+            </div>
+            <h1>VanguardRanks Generator</h1>
+            <p class="header-meta">Create and manage Minecraft server ranks with ease</p>
+        </div>
+
+        <!-- Main Container -->
+        <div class="card">
+            <!-- Tabs -->
+            <div
+                style="display: flex; gap: 8px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap;">
+                <button id="quickRefBtn" class="btn">
+                    <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6.253v13m0-13C10.477 5.252 5.324 5.252 3 7.576 1 9.6 1 13.6 3 15.624c2.324 2.324 7.477 2.324 9 1.323m0-13C13.523 5.252 18.676 5.252 21 7.576 23 9.6 23 13.6 21 15.624c-2.324 2.324-7.477 2.324-9 1.323" />
+                    </svg>
+                    Quick Reference
+                </button>
+                <button id="importBtn" class="btn">
+                    <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    Import JSON
+                </button>
+                <button id="exportBtn" class="btn">
+                    <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Export JSON
+                </button>
+            </div>
+
+            <div class="grid">
+                <!-- Left Panel -->
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <!-- Rank List -->
+                    <div class="animate-slide-in card">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <h2>
+                                <svg style="display: inline; width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                                </svg>
+                                Ranks
+                            </h2>
+                            <div style="display: flex; gap: 8px;">
+                                <button id="reorderBtn" class="btn">
+                                    <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                                    </svg>
+                                    Reorder
+                                </button>
+                                <button id="addRankBtn" class="btn btn-primary">
+                                    <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 4v16m8-8H4" />
+                                    </svg>
+                                    New Rank
+                                </button>
+                            </div>
+                        </div>
+                        <div id="ranksList" style="max-height: 300px; overflow-y: auto; padding-right: 8px;"
+                            class="custom-scrollbar">
+                            <!-- Ranks will be listed here -->
+                        </div>
+                    </div>
+
+                    <!-- Replace the #rankEditor div in index.html with this -->
+                    <div id="rankEditor" class="hidden animate-slide-in card">
+                        <!-- Tabs -->
+                        <div
+                            style="display: flex; gap: 12px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                            <button class="tab-button active" data-tab="basic">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                Basic
+                            </button>
+                            <button class="tab-button" data-tab="icon">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                                </svg>
+                                Icon
+                            </button>
+                            <button class="tab-button" data-tab="requirements">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                </svg>
+                                Requirements
+                            </button>
+                            <button class="tab-button" data-tab="lore">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                Lore
+                            </button>
+                            <button class="tab-button" data-tab="commands">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                Commands
+                            </button>
+                            <button class="tab-button" data-tab="luckperms">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                </svg>
+                                LuckPerms
+                            </button>
+                        </div>
+
+                        <!-- Tab Content -->
+                        <div id="tabContent">
+                            <!-- Basic Info Tab -->
+                            <div class="tab-content" data-tab-content="basic">
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block mb-2 font-semibold text-sm"
+                                            style="color: var(--text-primary);">Rank Name (ID)
+                                            <span class="ml-1 text-sm" style="color: var(--text-muted); cursor: help;"
+                                                title="Used as the YAML key (no spaces allowed). Example: rookie, explorer">ℹ️</span>
+                                        </label>
+                                        <input type="text" id="rankName" class="w-full" placeholder="rookie">
+                                        <p class="hidden mt-1 text-red-400 text-xs" id="rankNameError">Spaces are not
+                                            allowed in rank names</p>
+                                    </div>
+                                    <div>
+                                        <label class="block mb-2 font-semibold text-sm"
+                                            style="color: var(--text-primary);">Display Name
+                                            <span class="ml-1 text-sm" style="color: var(--text-muted); cursor: help;"
+                                                title="Formatted name shown to players. Supports color codes.">ℹ️</span>
+                                        </label>
+                                        <div style="display: flex; gap: 8px;">
+                                            <input type="text" id="displayName" class="flex-1" placeholder="&eRookie">
+                                            <button id="rgbDisplayBtn" class="btn">
+                                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                                                </svg>
+                                                RGB
+                                            </button>
+                                            <button id="fancyDisplayBtn" class="btn">
+                                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.837-4.477a4 4 0 015.656 0l4 4a4 4 0 00-5.656-5.656l-1.102 1.101" />
+                                                </svg>
+                                                Fancy
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block mb-2 font-semibold text-sm"
+                                            style="color: var(--text-primary);">Prefix
+                                            <span class="ml-1 text-sm" style="color: var(--text-muted); cursor: help;"
+                                                title="Chat prefix for players with this rank">ℹ️</span>
+                                        </label>
+                                        <div style="display: flex; gap: 8px;">
+                                            <input type="text" id="prefix" class="flex-1" placeholder="&8[&eROOKIE&8]">
+                                            <button id="rgbPrefixBtn" class="btn">
+                                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                                                </svg>
+                                                RGB
+                                            </button>
+                                            <button id="fancyPrefixBtn" class="btn">
+                                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.837-4.477a4 4 0 015.656 0l4 4a4 4 0 00-5.656-5.656l-1.102 1.101" />
+                                                </svg>
+                                                Fancy
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Icon Tab -->
+                            <div class="hidden tab-content" data-tab-content="icon">
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block mb-2 font-semibold text-sm"
+                                            style="color: var(--text-primary);">Icon Type</label>
+                                        <div class="icon-type-selector"
+                                            style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                                            <button class="icon-type-btn active" data-type="material">
+                                                <div
+                                                    style="display: flex; justify-content: center; align-items: center; margin-bottom: 4px;">
+                                                    <svg style="width: 24px; height: 24px; color: var(--accent-light);"
+                                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-14L4 7m8 4v10M4 7v10l8 4" />
+                                                    </svg>
+                                                </div>
+                                                <div class="font-semibold text-sm" style="color: var(--text-primary);">
+                                                    Material</div>
+                                            </button>
+                                            <button class="icon-type-btn" data-type="head">
+                                                <div
+                                                    style="display: flex; justify-content: center; align-items: center; margin-bottom: 4px;">
+                                                    <svg style="width: 24px; height: 24px; color: var(--accent-light);"
+                                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                                    </svg>
+                                                </div>
+                                                <div class="font-semibold text-sm" style="color: var(--text-primary);">
+                                                    Custom Head</div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="materialIconSection">
+                                        <label class="block mb-2 font-semibold text-sm"
+                                            style="color: var(--text-primary);">Material</label>
+                                        <input type="text" id="iconMaterial" list="materials" class="w-full"
+                                            placeholder="COBBLESTONE">
+                                        <datalist id="materials"></datalist>
+                                    </div>
+                                    <div id="headIconSection" class="hidden">
+                                        <label class="block mb-2 font-semibold text-sm"
+                                            style="color: var(--text-primary);">Head Texture (Base64)
+                                            <span class="ml-1 text-sm" style="color: var(--text-muted); cursor: help;"
+                                                title="Get from minecraft-heads.com or use a head database">ℹ️</span>
+                                        </label>
+                                        <textarea id="iconHeadTexture" rows="3" class="w-full font-mono text-sm"
+                                            placeholder="eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90..."></textarea>
+                                        <p class="mt-1 text-xs" style="color: var(--text-muted);">Format:
+                                            head:YOUR_BASE64_STRING</p>
+                                    </div>
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                        <div>
+                                            <label class="block mb-2 font-semibold text-sm"
+                                                style="color: var(--text-primary);">Amount</label>
+                                            <input type="number" id="iconAmount" min="1" max="64" value="1"
+                                                class="w-full">
+                                        </div>
+                                        <div>
+                                            <label class="block mb-2 font-semibold text-sm"
+                                                style="color: var(--text-primary);">Custom Model Data</label>
+                                            <input type="number" id="iconModelData" value="0" class="w-full">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Requirements Tab -->
+                            <div class="hidden tab-content" data-tab-content="requirements">
+                                <div class="space-y-4">
+                                    <div class="card"
+                                        style="padding: 24px; border: 2px solid rgba(255, 255, 255, 0.1);">
+                                        <h3
+                                            style="display: flex; align-items: center; margin-bottom: 12px; font-size: 16px; font-weight: 600; color: var(--text-primary);">
+                                            <svg style="width: 20px; height: 20px; margin-right: 8px; color: var(--accent-light);"
+                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            Quick Templates
+                                        </h3>
+                                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+                                            <button class="quick-req btn" data-template="playtime">
+                                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle; color: var(--accent-light);"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                                Playtime
+                                            </button>
+                                            <button class="quick-req btn" data-template="money">
+                                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle; color: var(--accent-light);"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                                Money
+                                            </button>
+                                            <button class="quick-req btn" data-template="kills">
+                                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle; color: var(--accent-light);"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                                </svg>
+                                                Kills
+                                            </button>
+                                            <button class="quick-req btn" data-template="level">
+                                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle; color: var(--accent-light);"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                                                </svg>
+                                                Level
+                                            </button>
+                                            <button class="quick-req btn" data-template="blocks">
+                                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle; color: var(--accent-light);"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-14L4 7m8 4v10M4 7v10l8 4" />
+                                                </svg>
+                                                Blocks
+                                            </button>
+                                            <button class="quick-req btn" data-template="custom">
+                                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle; color: var(--accent-light);"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M12 4v16m8-8H4" />
+                                                </svg>
+                                                Custom
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="requirementsContainer"
+                                        style="max-height: 384px; overflow-y: auto; padding-right: 8px;"
+                                        class="custom-scrollbar"></div>
+                                </div>
+                            </div>
+
+                            <!-- Lore Tab -->
+                            <div class="hidden tab-content" data-tab-content="lore">
+                                <div class="space-y-4">
+                                    <div class="card"
+                                        style="padding: 24px; border: 2px solid rgba(255, 255, 255, 0.1);">
+                                        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 8px;">
+                                            💡 <strong>Tip:</strong> Use requirement placeholders like <code
+                                                style="background: rgba(0, 0, 0, 0.2); padding: 2px 4px; border-radius: 4px; color: var(--accent-light);">%requirement_0%</code>
+                                            to show progress.
+                                        </p>
+                                        <div id="loreHints" style="font-size: 12px; color: var(--text-muted);"></div>
+                                    </div>
+                                    <div id="loreContainer"
+                                        style="max-height: 320px; overflow-y: auto; padding-right: 8px;"
+                                        class="custom-scrollbar"></div>
+                                    <button id="addLoreBtn" class="btn btn-primary" style="width: 100%; padding: 16px;">
+                                        <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 4v16m8-8H4" />
+                                        </svg>
+                                        Add Lore Line
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Commands Tab -->
+                            <div class="hidden tab-content" data-tab-content="commands">
+                                <div class="space-y-4">
+                                    <div class="card"
+                                        style="padding: 24px; border: 2px solid rgba(255, 255, 255, 0.1);">
+                                        <h3
+                                            style="display: flex; align-items: center; margin-bottom: 12px; font-size: 16px; font-weight: 600; color: var(--text-primary);">
+                                            <svg style="width: 20px; height: 20px; margin-right: 8px; color: var(--accent-light);"
+                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                            </svg>
+                                            Quick Commands
+                                        </h3>
+                                        <div
+                                            style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px;">
+                                            <button class="quick-cmd btn" data-cmd="luckperms">
+                                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle; color: var(--accent-light);"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                                </svg>
+                                                LuckPerms
+                                            </button>
+                                            <button class="quick-cmd btn" data-cmd="economy">
+                                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle; color: var(--accent-light);"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                                Money
+                                            </button>
+                                            <button class="quick-cmd btn" data-cmd="title">
+                                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle; color: var(--accent-light);"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                                </svg>
+                                                Title
+                                            </button>
+                                            <button class="quick-cmd btn" data-cmd="discord">
+                                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle; color: var(--accent-light);"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                                </svg>
+                                                Discord
+                                            </button>
+                                            <button class="quick-cmd btn" data-cmd="kit">
+                                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle; color: var(--accent-light);"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                                                </svg>
+                                                Kit
+                                            </button>
+                                            <button class="quick-cmd btn" data-cmd="custom">
+                                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle; color: var(--accent-light);"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                </svg>
+                                                Custom
+                                            </button>
+                                        </div>
+                                        <div class="space-y-1" style="font-size: 12px; color: var(--text-muted);">
+                                            <p><strong>Conditional Commands:</strong></p>
+                                            <p>• <code
+                                                    style="background: rgba(0, 0, 0, 0.2); padding: 2px 4px; border-radius: 4px; color: var(--accent-light);">perm_x,y:</code>
+                                                - Requires ALL permissions</p>
+                                            <p>• <code
+                                                    style="background: rgba(0, 0, 0, 0.2); padding: 2px 4px; border-radius: 4px; color: var(--accent-light);">perm_x;y:</code>
+                                                - Requires ANY permission</p>
+                                        </div>
+                                    </div>
+                                    <div id="commandsContainer"
+                                        style="max-height: 320px; overflow-y: auto; padding-right: 8px;"
+                                        class="custom-scrollbar"></div>
+                                </div>
+                            </div>
+
+                            <!-- LuckPerms Tab -->
+                            <div class="hidden tab-content" data-tab-content="luckperms">
+                                <div class="space-y-4">
+                                    <div class="card"
+                                        style="padding: 24px; border: 2px solid rgba(255, 255, 255, 0.1);">
+                                        <h3
+                                            style="display: flex; align-items: center; margin-bottom: 12px; font-size: 16px; font-weight: 600; color: var(--text-primary);">
+                                            <svg style="width: 20px; height: 20px; margin-right: 8px; color: var(--accent-light);"
+                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                            </svg>
+                                            LuckPerms Configuration
+                                        </h3>
+                                        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">
+                                            Configure how this rank appears in LuckPerms. These settings will be used
+                                            when generating the Skript installation file.</p>
+                                    </div>
+                                    <div>
+                                        <label class="block mb-2 font-semibold text-sm"
+                                            style="color: var(--text-primary);">Group Weight
+                                            <span class="ml-1 text-sm" style="color: var(--text-muted); cursor: help;"
+                                                title="Higher weight = higher priority. Auto-calculated based on rank order if left at 0.">ℹ️</span>
+                                        </label>
+                                        <input type="number" id="lpWeight" min="0" value="0" class="w-full"
+                                            placeholder="0 = Auto">
+                                    </div>
+                                    <div>
+                                        <label class="block mb-2 font-semibold text-sm"
+                                            style="color: var(--text-primary);">Permissions
+                                            <span class="ml-1 text-sm" style="color: var(--text-muted); cursor: help;"
+                                                title="Add permissions that players with this rank should have">ℹ️</span>
+                                        </label>
+                                        <div id="lpPermissionsContainer" class="space-y-2"></div>
+                                        <button id="addLpPermBtn" class="btn btn-primary"
+                                            style="width: 100%; padding: 16px; margin-top: 16px;">
+                                            <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 4v16m8-8H4" />
+                                            </svg>
+                                            Add Permission
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                            <input type="checkbox" id="lpInheritPrevious" checked
+                                                style="width: 20px; height: 20px; border-radius: 4px; accent-color: var(--accent-light);">
+                                            <span class="font-semibold text-sm"
+                                                style="color: var(--text-primary);">Inherit from previous rank</span>
+                                        </label>
+                                        <p class="mt-1 ml-6 text-xs" style="color: var(--text-muted);">If enabled, this
+                                            rank will automatically inherit permissions from the previous rank in the
+                                            list</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div
+                            style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                            <button id="saveRankBtn" class="btn btn-primary" style="flex: 1; padding: 16px;">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                                </svg>
+                                Save Rank
+                            </button>
+                            <button id="duplicateRankBtn" class="btn btn-primary" style="flex: 1; padding: 16px;">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                </svg>
+                                Duplicate
+                            </button>
+                            <button id="deleteRankBtn" class="btn"
+                                style="flex: 1; padding: 16px; border-color: rgba(239, 68, 68, 0.5);">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel -->
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <div class="card">
+                        <h3 style="display: flex; align-items: center;">
+                            <svg style="width: 20px; height: 20px; margin-right: 8px;" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                            </svg>
+                            Configuration Status
+                        </h3>
+                        <p style="font-size: 14px; margin: 8px 0;"><strong>Total Ranks:</strong> <span id="totalRanks"
+                                style="color: var(--accent-light); font-weight: 700;">0</span></p>
+                        <p style="font-size: 14px; margin: 8px 0;"><strong>Requirements:</strong> <span
+                                id="totalRequirements" style="color: var(--accent-light); font-weight: 700;">0</span>
+                        </p>
+                        <p style="font-size: 14px; margin: 8px 0;"><strong>Commands:</strong> <span id="totalCommands"
+                                style="color: var(--accent-light); font-weight: 700;">0</span></p>
+                    </div>
+
+                    <button id="downloadBtn" class="btn btn-primary" style="width: 100%; padding: 16px;">
+                        <svg style="display: inline; width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Download ranks.yml
+                    </button>
+
+                    <button id="downloadSkriptBtn" class="btn btn-primary" style="width: 100%; padding: 16px;">
+                        <svg style="display: inline; width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        Download LuckPerms.sk
+                    </button>
+
+                    <button id="validateYamlBtn" class="btn" style="width: 100%; padding: 16px;">
+                        <svg style="display: inline; width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Validate Configuration
+                    </button>
+
+                    <div id="validationResults" class="hidden">
+                        <!-- Validation results will appear here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="padding: 32px; text-align: center; color: var(--text-muted); font-size: 13px;">
+            <p style="opacity: 0.8; margin: 8px 0;">Generated configurations are optimized for performance. Always
+                backup your original files before replacing them.</p>
+            <p style="opacity: 0.8; margin: 8px 0;">Made with 🤍 by <a href="https://hsinghhira.me"
+                    style="color: var(--accent-light); text-decoration: underline;" target="_blank">Harman Singh
+                    Hira</a> in <a href="https://en.wikipedia.org/wiki/Aotearoa"
+                    style="color: var(--accent-light); text-decoration: underline;" target="_blank">Aotearoa</a></p>
+        </div>
+    </div>
+
+    <div id="quickRefModal"
+        class="hidden z-50 fixed inset-0 flex justify-center items-center bg-black/70 backdrop-blur-sm">
+        <div style="margin: 16px; padding: 24px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; width: 100%; max-width: 672px; max-height: 90vh; overflow-y: auto; background: var(--card-bg);"
+            class="custom-scrollbar">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h3
+                    style="font-size: 20px; font-weight: 700; color: var(--text-primary); display: flex; align-items: center;">
+                    <svg style="width: 20px; height: 20px; margin-right: 8px; color: var(--accent-light);" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6.253v13m0-13C10.477 5.252 5.324 5.252 3 7.576 1 9.6 1 13.6 3 15.624c2.324 2.324 7.477 2.324 9 1.323m0-13C13.523 5.252 18.676 5.252 21 7.576 23 9.6 23 13.6 21 15.624c-2.324 2.324-7.477 2.324-9 1.323" />
+                    </svg>
+                    Quick Reference
+                </h3>
+                <button id="closeQuickRefBtn"
+                    style="font-size: 24px; color: var(--text-muted); cursor: pointer;">✕</button>
+            </div>
+            <div style="display: grid; gap: 16px;">
+                <!-- Plugin Links Section -->
+                <div
+                    style="padding: 16px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; background: var(--bg-secondary);">
+                    <h4 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">
+                        Required Plugins</h4>
+                    <div style="display: grid; gap: 8px;">
+                        <a href="https://www.spigotmc.org/resources/vanguardranks-%E2%AD%95-unlimited-ranks-%E2%9C%85-gui-based-%E2%9C%A8-papi-support.117971/"
+                            target="_blank" class="btn"
+                            style="display: flex; align-items: center; justify-content: center; padding: 12px;">
+                            <svg style="width: 20px; height: 20px; margin-right: 8px; color: var(--accent-light);"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                            </svg>
+                            VanguardRanks Plugin
+                        </a>
+                        <a href="https://luckperms.net/" target="_blank" class="btn"
+                            style="display: flex; align-items: center; justify-content: center; padding: 12px;">
+                            <svg style="width: 20px; height: 20px; margin-right: 8px; color: var(--accent-light);"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                            LuckPerms
+                        </a>
+                        <a href="https://docs.skriptlang.org/" target="_blank" class="btn"
+                            style="display: flex; align-items: center; justify-content: center; padding: 12px;">
+                            <svg style="width: 20px; height: 20px; margin-right: 8px; color: var(--accent-light);"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Skript Documentation
+                        </a>
+                    </div>
+                </div>
+
+                <div
+                    style="padding: 16px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; background: var(--bg-secondary);">
+                    <h4 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">
+                        Placeholders</h4>
+                    <div style="display: grid; gap: 4px; padding: 12px; font-family: monospace; font-size: 12px;">
+                        <p><code
+                                style="background: rgba(0, 0, 0, 0.2); padding: 2px 4px; border-radius: 4px; color: var(--accent-light);">%player%</code>
+                            - Player name</p>
+                        <p><code
+                                style="background: rgba(0, 0, 0, 0.2); padding: 2px 4px; border-radius: 4px; color: var(--accent-light);">%name%</code>
+                            - Rank ID</p>
+                        <p><code
+                                style="background: rgba(0, 0, 0, 0.2); padding: 2px 4px; border-radius: 4px; color: var(--accent-light);">%display_name%</code>
+                            - Formatted rank name</p>
+                        <p><code
+                                style="background: rgba(0, 0, 0, 0.2); padding: 2px 4px; border-radius: 4px; color: var(--accent-light);">%requirement_0%</code>
+                            - First requirement status</p>
+                        <p><code
+                                style="background: rgba(0, 0, 0, 0.2); padding: 2px 4px; border-radius: 4px; color: var(--accent-light);">%status%</code>
+                            - Requirement status (✓/✗)</p>
+                        <p><code
+                                style="background: rgba(0, 0, 0, 0.2); padding: 2px 4px; border-radius: 4px; color: var(--accent-light);">%current%</code>
+                            - Current value</p>
+                        <p><code
+                                style="background: rgba(0, 0, 0, 0.2); padding: 2px 4px; border-radius: 4px; color: var(--accent-light);">%required%</code>
+                            - Required value</p>
+                    </div>
+                </div>
+                <div
+                    style="padding: 16px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; background: var(--bg-secondary);">
+                    <h4 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">
+                        Evaluation Types</h4>
+                    <div style="display: grid; gap: 8px; padding: 12px; font-size: 12px;">
+                        <div>
+                            <strong style="color: var(--accent-light);">NUMBER:</strong>
+                            <p style="color: var(--text-muted);">EQUAL, GREATER, LESSER, GREATER_EQUAL, LESSER_EQUAL,
+                                NOT_EQUAL</p>
+                        </div>
+                        <div>
+                            <strong style="color: var(--accent-light);">TEXT:</strong>
+                            <p style="color: var(--text-muted);">EQUAL, NOT_EQUAL</p>
+                        </div>
+                        <div>
+                            <strong style="color: var(--accent-light);">BOOLEAN:</strong>
+                            <p style="color: var(--text-muted);">EQUAL, NOT_EQUAL</p>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    style="padding: 16px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; background: var(--bg-secondary);">
+                    <h4 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">
+                        Color Codes</h4>
+                    <div
+                        style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 12px; font-size: 12px;">
+                        <p><code
+                                style="background: rgba(0, 0, 0, 0.2); padding: 2px 4px; border-radius: 4px; color: var(--accent-light);">&amp;0-9, a-f</code>
+                            - Standard colors</p>
+                        <p><code
+                                style="background: rgba(0, 0, 0, 0.2); padding: 2px 4px; border-radius: 4px; color: var(--accent-light);">&amp;l</code>
+                            - Bold</p>
+                        <p><code
+                                style="background: rgba(0, 0, 0, 0.2); padding: 2px 4px; border-radius: 4px; color: var(--accent-light);">&amp;m</code>
+                            - Strikethrough</p>
+                        <p><code
+                                style="background: rgba(0, 0, 0, 0.2); padding: 2px 4px; border-radius: 4px; color: var(--accent-light);">&amp;n</code>
+                            - Underline</p>
+                        <p><code
+                                style="background: rgba(0, 0, 0, 0.2); padding: 2px 4px; border-radius: 4px; color: var(--accent-light);">&amp;o</code>
+                            - Italic</p>
+                        <p><code
+                                style="background: rgba(0, 0, 0, 0.2); padding: 2px 4px; border-radius: 4px; color: var(--accent-light);">&amp;r</code>
+                            - Reset</p>
+                        <p><code
+                                style="background: rgba(0, 0, 0, 0.2); padding: 2px 4px; border-radius: 4px; color: var(--accent-light);">&amp;#RRGGBB</code>
+                            - RGB/HEX colors</p>
+                    </div>
+                </div>
+                <div
+                    style="padding: 16px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; background: var(--bg-secondary);">
+                    <h4 style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Tips
+                        & Tricks</h4>
+                    <ul
+                        style="display: grid; gap: 8px; font-size: 12px; list-style: disc; padding-left: 20px; color: var(--text-muted);">
+                        <li>Rank names cannot contain spaces - use underscores instead</li>
+                        <li>Use <code
+                                style="background: rgba(0, 0, 0, 0.2); padding: 2px 4px; border-radius: 4px; color: var(--accent-light);">%requirement_N%</code>
+                            in lore to show requirement progress</li>
+                        <li>Custom heads from minecraft-heads.com work great for icons</li>
+                        <li>Reorder ranks to set proper progression hierarchy</li>
+                        <li>Test placeholders with PlaceholderAPI before using</li>
+                        <li>Use conditional commands for VIP/premium perks</li>
+                        <li>LuckPerms tab generates Skript file for easy rank installation</li>
+                        <li>Use the Fancy button to convert text to small caps: [RANK] → [ʀᴀɴᴋ]</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RGB Color Picker Modal -->
+    <div id="rgbModal" class="hidden modal-overlay">
+        <div class="modal-content">
+            <h3
+                style="display: flex; align-items: center; font-size: 24px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px;">
+                <svg style="width: 20px; height: 20px; margin-right: 8px;" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                </svg>
+                RGB Color Picker
+            </h3>
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+                <div>
+                    <label style="font-size: 14px; font-weight: 600; color: var(--text-primary);">Text</label>
+                    <input type="text" id="rgbText" placeholder="Your text" style="margin-top: 8px;">
+                </div>
+                <div>
+                    <label style="font-size: 14px; font-weight: 600; color: var(--text-primary);">Start Color
+                        (HEX)</label>
+                    <div style="display: flex; gap: 8px; margin-top: 8px;">
+                        <input type="color" id="rgbStartColor" value="#00CED1"
+                            style="width: 64px; height: 48px; border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 4px; cursor: pointer;">
+                        <input type="text" id="rgbStartHex" value="#00CED1" style="flex: 1;">
+                    </div>
+                </div>
+                <div>
+                    <label style="font-size: 14px; font-weight: 600; color: var(--text-primary);">End Color (HEX) -
+                        Optional for gradient</label>
+                    <div style="display: flex; gap: 8px; margin-top: 8px;">
+                        <input type="color" id="rgbEndColor" value="#87CEEB"
+                            style="width: 64px; height: 48px; border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 4px; cursor: pointer;">
+                        <input type="text" id="rgbEndHex" value="#87CEEB" style="flex: 1;">
+                    </div>
+                </div>
+                <div class="card" style="padding: 12px;">
+                    <label
+                        style="font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">Preview:</label>
+                    <code id="rgbPreview"
+                        style="font-size: 12px; color: var(--accent-light); word-break: break-all;"></code>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button id="rgbApplyBtn" class="btn btn-primary" style="flex: 1; padding: 16px;">Apply</button>
+                    <button id="rgbCancelBtn" class="btn" style="flex: 1; padding: 16px;">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fancy Font Modal -->
+    <div id="fancyModal" class="hidden modal-overlay">
+        <div class="modal-content">
+            <h3
+                style="display: flex; align-items: center; font-size: 24px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px;">
+                <svg style="width: 20px; height: 20px; margin-right: 8px;" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.837-4.477a4 4 0 015.656 0l4 4a4 4 0 00-5.656-5.656l-1.102 1.101" />
+                </svg>
+                Fancy Font Converter
+            </h3>
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+                <div>
+                    <label style="font-size: 14px; font-weight: 600; color: var(--text-primary);">Text</label>
+                    <input type="text" id="fancyText" placeholder="Enter text" style="margin-top: 8px;">
+                </div>
+                <div class="card" style="padding: 12px;">
+                    <label
+                        style="font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">Preview:</label>
+                    <div id="fancyPreview" style="font-size: 16px; color: var(--accent-light); word-break: break-all;">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button id="fancyApplyBtn" class="btn btn-primary" style="flex: 1; padding: 16px;">Apply</button>
+                    <button id="fancyCancelBtn" class="btn" style="flex: 1; padding: 16px;">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Modal -->
+    <div id="importModal" class="hidden modal-overlay">
+        <div class="modal-content" style="max-width: 640px;">
+            <h3
+                style="display: flex; align-items: center; font-size: 24px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px;">
+                <svg style="width: 20px; height: 20px; margin-right: 8px;" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>
+                Import JSON Configuration
+            </h3>
+            <textarea id="importJsonText" placeholder="Paste your exported JSON configuration here..."
+                style="height: 256px; font-family: 'Courier New', monospace; font-size: 14px;"></textarea>
+            <div style="display: flex; gap: 8px; margin-top: 16px;">
+                <button id="importConfirmBtn" class="btn btn-primary" style="flex: 1; padding: 16px;">Import</button>
+                <button id="importCancelBtn" class="btn" style="flex: 1; padding: 16px;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reorder Modal -->
+    <div id="reorderModal" class="hidden modal-overlay">
+        <div class="modal-content">
+            <h3
+                style="display: flex; align-items: center; font-size: 24px; font-weight: 700; color: var(--text-primary); margin-bottom: 24px;">
+                <svg style="width: 20px; height: 20px; margin-right: 8px;" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                </svg>
+                Reorder Ranks
+            </h3>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">Drag ranks to reorder them. The
+                order affects rank progression.</p>
+            <div id="reorderList" style="max-height: 384px; overflow-y: auto; padding-right: 8px;"
+                class="custom-scrollbar">
+                <!-- Draggable rank items will be added here -->
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: 16px;">
+                <button id="reorderSaveBtn" class="btn btn-primary" style="flex: 1; padding: 16px;">Save Order</button>
+                <button id="reorderCancelBtn" class="btn" style="flex: 1; padding: 16px;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+
+</html>
