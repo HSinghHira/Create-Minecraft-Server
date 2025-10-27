@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Skript Generator</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>💎</text></svg>">
+    </link>
+    <meta name="description" content="Convert Minecraft commands into professional Skript code with ease">
+    <meta name="keywords"
+        content="Minecraft server, config generator, optimize Minecraft, bukkit.yml, spigot.yml, server.properties, paper-world.yml, purpur.yml, server optimization">
+    <meta name="author" content="Harman Singh Hira">
+    <meta name="robots" content="index, follow">
+
+    <!-- Schema Markup for SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Minecraft Skript Generator",
+      "operatingSystem": "Web",
+      "applicationCategory": "Utility",
+      "description": "Convert Minecraft commands into professional Skript code with ease",
+      "author": {
+        "@type": "Person",
+        "name": "Harman Singh Hira"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="alertContainer"></div>
+
+    <!-- Header -->
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 32px;">
+            <div
+                style="display: inline-block; padding: 16px; background: rgba(255,255,255,0.05); border-radius: 16px; margin-bottom: 16px;">
+                <svg style="width: 64px; height: 64px; color: var(--accent-light);" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+            </div>
+            <h1>Minecraft Skript Generator</h1>
+            <p class="header-meta">Advanced Skript generator with professional features</p>
+        </div>
+
+        <!-- Main Container -->
+        <div class="card">
+            <div class="grid">
+                <!-- Left Panel -->
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <!-- Command Input -->
+                    <div class="animate-slide-in card">
+
+
+                        <div style="margin-bottom: 16px;">
+                            <label>Command Name</label>
+                            <input id="commandName" type="text" placeholder="e.g., warrior, kit1" />
+                        </div>
+
+                        <div style="margin-bottom: 16px;">
+                            <label>Aliases (comma-separated)</label>
+                            <input id="aliases" type="text" placeholder="e.g., w, war" />
+                            <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Alternative names
+                                for the command</p>
+                        </div>
+
+                        <label>Paste your Minecraft commands</label>
+                        <div class="drop-area" id="dropArea">
+                            Drag & drop a <code>.txt</code> or <code>.mcfunction</code> file here, or paste below.
+                        </div>
+                        <textarea id="inputCommands" style="min-height: 150px; font-family: monospace;"
+                            placeholder="summon item ~ ~1 ~ {Item:{id:iron_helmet,...}}"></textarea>
+
+                        <div
+                            style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: var(--text-muted);">
+                            <span>Lines: <span id="linesCount">0</span></span>
+                            <span>Characters: <span id="charCount">0</span></span>
+                        </div>
+
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px;">
+                            <button class="btn btn-primary" id="generateBtn">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                                Generate
+                            </button>
+                            <button class="btn" id="copyBtn">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                </svg>
+                                Copy
+                            </button>
+                            <button class="btn" id="saveBtn">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                                </svg>
+                                Save .sk
+                            </button>
+                            <button class="btn" id="zipBtn">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z" />
+                                </svg>
+                                Save ZIP
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Options -->
+                    <div class="animate-slide-in card">
+                        <div class="tabs">
+                            <button class="tab active" data-tab="basic">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                Basic
+                            </button>
+                            <button class="tab" data-tab="execution">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                                Execution
+                            </button>
+                            <button class="tab" data-tab="messages">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                                </svg>
+                                Messages
+                            </button>
+                            <button class="tab" data-tab="advanced">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                                </svg>
+                                Advanced
+                            </button>
+                        </div>
+
+                        <!-- Basic Tab -->
+                        <div class="tab-content active" data-content="basic">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                                <div class="toggle-wrapper">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="includePerm" checked />
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span>Include permission</span>
+                                </div>
+                                <div class="toggle-wrapper">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="consoleExec" checked />
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span>Console execute</span>
+                                </div>
+                            </div>
+
+                            <div class="option-group">
+                                <label>Cooldown (seconds)</label>
+                                <input id="cooldown" type="number" min="0" value="0" class="input-small"
+                                    placeholder="0">
+                            </div>
+                        </div>
+
+                        <!-- Execution Tab -->
+                        <div class="tab-content" data-content="execution">
+                            <div class="option-group">
+                                <div class="toggle-wrapper">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="addDelay" />
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span>Add delay between commands</span>
+                                </div>
+                                <div class="input-group" style="margin-left: 54px;">
+                                    <input id="delayTime" type="number" min="0" step="0.1" value="0.5"
+                                        class="input-small" placeholder="0.5">
+                                    <span style="font-size: 12px; color: var(--text-muted);">seconds</span>
+                                </div>
+                            </div>
+
+                            <div class="option-group">
+                                <div class="toggle-wrapper">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="loopCommands" />
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span>Loop/Repeat commands</span>
+                                </div>
+                                <div class="input-group" style="margin-left: 54px;">
+                                    <input id="loopCount" type="number" min="1" value="2" class="input-small"
+                                        placeholder="2">
+                                    <span style="font-size: 12px; color: var(--text-muted);">times</span>
+                                </div>
+                            </div>
+
+                            <div class="option-group">
+                                <div class="toggle-wrapper">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="replaceCoords" />
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span>Replace ~ ~ ~ with player location</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Messages Tab -->
+                        <div class="tab-content" data-content="messages">
+                            <div class="option-group">
+                                <label>Success message</label>
+                                <input id="successMsg" type="text" value="&aAll items spawned!">
+                            </div>
+
+                            <div class="option-group">
+                                <label>Message type</label>
+                                <select id="messageType">
+                                    <option value="send">Chat message (send)</option>
+                                    <option value="actionbar">Action bar</option>
+                                    <option value="title">Title</option>
+                                </select>
+                            </div>
+
+                            <div class="option-group">
+                                <div class="toggle-wrapper">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="playSound" />
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span>Play success sound</span>
+                                </div>
+                                <input id="soundName" type="text" placeholder="entity.player.levelup"
+                                    style="margin-top: 8px;">
+                            </div>
+
+                            <div class="option-group">
+                                <label>Error message (no permission)</label>
+                                <input id="errorMsg" type="text" value="&cYou don't have permission!">
+                            </div>
+                        </div>
+
+                        <!-- Advanced Tab -->
+                        <div class="tab-content" data-content="advanced">
+                            <div class="option-group">
+                                <label>Indentation</label>
+                                <select id="indentType">
+                                    <option value="spaces">Spaces (4)</option>
+                                    <option value="tabs">Tabs</option>
+                                </select>
+                            </div>
+
+                            <div class="option-group">
+                                <label>Comment style</label>
+                                <select id="commentStyle">
+                                    <option value="descriptive">Descriptive</option>
+                                    <option value="minimal">Minimal</option>
+                                    <option value="none">None</option>
+                                </select>
+                            </div>
+
+                            <div class="option-group">
+                                <div class="toggle-wrapper">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="addHeader" checked />
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span>Add file header comment</span>
+                                </div>
+                            </div>
+
+                            <div class="option-group">
+                                <div class="toggle-wrapper">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="autoUpdate" checked />
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span>Auto-update preview</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel -->
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <div class="card">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <h3 style="margin: 0;">Generated Skript</h3>
+                            <span class="badge" id="previewBadge">Preview</span>
+                        </div>
+
+                        <textarea id="outputSkript" readonly class="custom-scrollbar"
+                            style="height: 520px; width: 100%; padding: 12px; background: #0b1220; color: #cfe8ff; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace; font-size: 13px; line-height: 1.5; resize: none;"></textarea>
+
+                        <div id="genStatus"
+                            style="margin-top: 8px; font-size: 12px; color: var(--text-muted); text-align: right;">
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>
+                            <svg style="display: inline; width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                            Quick Templates
+                        </h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px;">
+                            <button class="btn" data-tpl="armor">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5z" />
+                                </svg>
+                                Armor Set
+                            </button>
+                            <button class="btn" data-tpl="weapons">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                                Weapons Kit
+                            </button>
+                            <button class="btn" data-tpl="items">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-14L4 7m8 4v10M4 7v10l8 4" />
+                                </svg>
+                                Items Bundle
+                            </button>
+                            <button class="btn" data-tpl="effects">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                                </svg>
+                                Effect Kit
+                            </button>
+                        </div>
+                        <p style="font-size: 12px; color: var(--text-muted); margin-top: 12px;">Click a template to
+                            inject example commands</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="padding: 32px; text-align: center; color: var(--text-muted); font-size: 13px;">
+            <p style="opacity: 0.8; margin: 8px 0;">Convert Minecraft commands into professional Skript code with ease
+            </p>
+            <p style="opacity: 0.8; margin: 8px 0;">Made with 🤍 by <a href="https://hsinghhira.me"
+                    style="color: var(--accent-light); text-decoration: underline;" target="_blank">Harman Singh
+                    Hira</a> in <a href="https://en.wikipedia.org/wiki/Aotearoa"
+                    style="color: var(--accent-light); text-decoration: underline;" target="_blank">Aotearoa</a></p>
+        </div>
+    </div>
+
+    <input id="importFile" type="file" class="hidden" accept=".txt,.mcfunction" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.0/jszip.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>

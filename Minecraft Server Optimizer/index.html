@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Server Config Generator - Optimize Your Server</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>💎</text></svg>">
+    </link>
+    <meta name="description"
+        content="Generate optimized configuration files for your Minecraft server. Customize bukkit.yml, spigot.yml, server.properties, paper-world.yml, and purpur.yml for better performance.">
+    <meta name="keywords"
+        content="Minecraft server, config generator, optimize Minecraft, bukkit.yml, spigot.yml, server.properties, paper-world.yml, purpur.yml, server optimization">
+    <meta name="author" content="Harman Singh Hira">
+    <meta name="robots" content="index, follow">
+
+    <!-- Schema Markup for SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Minecraft Server Config Generator",
+      "operatingSystem": "Web",
+      "applicationCategory": "Utility",
+      "description": "A web-based tool to generate optimized configuration files for Minecraft servers, including bukkit.yml, spigot.yml, server.properties, paper-world.yml, and purpur.yml.",
+      "author": {
+        "@type": "Person",
+        "name": "Harman Singh Hira"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "sameAs": [
+        "https://github.com/YouHaveTrouble/minecraft-optimization"
+      ]
+    }
+    </script>
+
+
+    <link href="style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div style="text-align: center; margin-bottom: 32px;">
+            <div
+                style="display: inline-block; padding: 16px; background: rgba(255,255,255,0.05); border-radius: 16px; margin-bottom: 16px;">
+                <svg style="width: 64px; height: 64px; color: var(--accent-light);" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+            </div>
+            <h1>Minecraft Server Optimizer</h1>
+            <p class="header-meta">Generate optimized configuration files for your server</p>
+        </div>
+
+        <!-- Main Container -->
+        <div class="card">
+            <!-- Tabs -->
+            <div
+                style="display: flex; gap: 8px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap;">
+                <button class="tab-button active" onclick="switchTab('bukkit')">bukkit.yml</button>
+                <button class="tab-button" onclick="switchTab('spigot')">spigot.yml</button>
+                <button class="tab-button" onclick="switchTab('server')">server.properties</button>
+                <button class="tab-button" onclick="switchTab('paper')">paper-world.yml</button>
+                <button class="tab-button" onclick="switchTab('purpur')">purpur.yml</button>
+            </div>
+
+            <!-- Bukkit Tab -->
+            <div id="content-bukkit" class="tab-content active">
+                <div class="grid-layout">
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="animate-slide-in card">
+                            <h3>Dimension Settings</h3>
+                            <div class="setting-item">
+                                <label style="display: flex;   align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Enable End Dimension</span>
+                                    <input type="checkbox" id="allow-end" checked onchange="generatePreview('bukkit')">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="animate-slide-in card">
+                            <h3>Spawn Limits</h3>
+                            <div class="setting-item">
+                                <label>Monsters: <span id="monsters-val"
+                                        style="color: var(--accent-light); float: right;">20</span></label>
+                                <input type="range" id="spawn-monsters" min="5" max="70" value="20"
+                                    oninput="updateValue('monsters-val', this.value); generatePreview('bukkit')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Animals: <span id="animals-val"
+                                        style="color: var(--accent-light); float: right;">5</span></label>
+                                <input type="range" id="spawn-animals" min="1" max="15" value="5"
+                                    oninput="updateValue('animals-val', this.value); generatePreview('bukkit')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Water Animals: <span id="water-animals-val"
+                                        style="color: var(--accent-light); float: right;">2</span></label>
+                                <input type="range" id="spawn-water-animals" min="1" max="10" value="2"
+                                    oninput="updateValue('water-animals-val', this.value); generatePreview('bukkit')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Water Ambient: <span id="water-ambient-val"
+                                        style="color: var(--accent-light); float: right;">2</span></label>
+                                <input type="range" id="spawn-water-ambient" min="1" max="10" value="2"
+                                    oninput="updateValue('water-ambient-val', this.value); generatePreview('bukkit')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Water Underground: <span id="water-underground-val"
+                                        style="color: var(--accent-light); float: right;">3</span></label>
+                                <input type="range" id="spawn-water-underground" min="1" max="10" value="3"
+                                    oninput="updateValue('water-underground-val', this.value); generatePreview('bukkit')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Axolotls: <span id="axolotls-val"
+                                        style="color: var(--accent-light); float: right;">3</span></label>
+                                <input type="range" id="spawn-axolotls" min="1" max="10" value="3"
+                                    oninput="updateValue('axolotls-val', this.value); generatePreview('bukkit')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Ambient: <span id="ambient-val"
+                                        style="color: var(--accent-light); float: right;">1</span></label>
+                                <input type="range" id="spawn-ambient" min="1" max="10" value="1"
+                                    oninput="updateValue('ambient-val', this.value); generatePreview('bukkit')">
+                            </div>
+                        </div>
+
+                        <div class="animate-slide-in card">
+                            <h3>Tick Rates</h3>
+                            <div class="setting-item">
+                                <label>Monster Spawns: <span id="tick-monsters-val"
+                                        style="color: var(--accent-light); float: right;">10</span></label>
+                                <input type="range" id="tick-monster-spawns" min="1" max="50" value="10"
+                                    oninput="updateValue('tick-monsters-val', this.value); generatePreview('bukkit')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Animal Spawns: <span id="tick-animals-val"
+                                        style="color: var(--accent-light); float: right;">400</span></label>
+                                <input type="range" id="tick-animal-spawns" min="100" max="800" value="400" step="50"
+                                    oninput="updateValue('tick-animals-val', this.value); generatePreview('bukkit')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Water Spawns: <span id="tick-water-val"
+                                        style="color: var(--accent-light); float: right;">400</span></label>
+                                <input type="range" id="tick-water-spawns" min="100" max="800" value="400" step="50"
+                                    oninput="updateValue('tick-water-val', this.value); generatePreview('bukkit')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Water Ambient: <span id="tick-water-ambient-val"
+                                        style="color: var(--accent-light); float: right;">400</span></label>
+                                <input type="range" id="tick-water-ambient-spawns" min="100" max="800" value="400"
+                                    step="50"
+                                    oninput="updateValue('tick-water-ambient-val', this.value); generatePreview('bukkit')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Water Underground: <span id="tick-water-underground-val"
+                                        style="color: var(--accent-light); float: right;">400</span></label>
+                                <input type="range" id="tick-water-underground-spawns" min="100" max="800" value="400"
+                                    step="50"
+                                    oninput="updateValue('tick-water-underground-val', this.value); generatePreview('bukkit')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Axolotl Spawns: <span id="tick-axolotls-val"
+                                        style="color: var(--accent-light); float: right;">400</span></label>
+                                <input type="range" id="tick-axolotl-spawns" min="100" max="800" value="400" step="50"
+                                    oninput="updateValue('tick-axolotls-val', this.value); generatePreview('bukkit')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Ambient Spawns: <span id="tick-ambient-val"
+                                        style="color: var(--accent-light); float: right;">400</span></label>
+                                <input type="range" id="tick-ambient-spawns" min="100" max="800" value="400" step="50"
+                                    oninput="updateValue('tick-ambient-val', this.value); generatePreview('bukkit')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Autosave: <span id="autosave-val"
+                                        style="color: var(--accent-light); float: right;">6000</span></label>
+                                <input type="range" id="tick-autosave" min="1000" max="12000" value="6000" step="1000"
+                                    oninput="updateValue('autosave-val', this.value); generatePreview('bukkit')">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="info-card">
+                            <h3 style="margin-bottom: 12px;">Configuration Info</h3>
+                            <p><strong>Monsters:</strong> Maximum hostile mobs per chunk</p>
+                            <p><strong>Animals:</strong> Maximum peaceful animals per chunk</p>
+                            <p><strong>Tick Rates:</strong> Lower values = more frequent spawning (higher load)</p>
+                            <p><strong>Autosave:</strong> How often to save chunks (in ticks, 20 ticks = 1 second)</p>
+                        </div>
+
+                        <div class="card">
+                            <h3 style="margin-bottom: 12px;">Preview</h3>
+                            <div class="config-output custom-scrollbar">
+                                <pre id="bukkit-preview"
+                                    style="margin: 0; font-size: 12px; white-space: pre-wrap;">Configuration preview will appear here...</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spigot Tab -->
+            <div id="content-spigot" class="tab-content">
+                <div class="grid-layout">
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="animate-slide-in card">
+                            <h3>View & Distance</h3>
+                            <div class="setting-item">
+                                <label>View Distance</label>
+                                <select id="spigot-view-distance" onchange="generatePreview('spigot')">
+                                    <option value="default" selected>Default (Use server.properties)</option>
+                                    <option value="4">4 chunks</option>
+                                    <option value="6">6 chunks</option>
+                                    <option value="8">8 chunks</option>
+                                    <option value="10">10 chunks</option>
+                                </select>
+                            </div>
+                            <div class="setting-item">
+                                <label>Simulation Distance</label>
+                                <select id="spigot-sim-distance" onchange="generatePreview('spigot')">
+                                    <option value="default" selected>Default (Use server.properties)</option>
+                                    <option value="3">3 chunks</option>
+                                    <option value="4">4 chunks</option>
+                                    <option value="6">6 chunks</option>
+                                    <option value="8">8 chunks</option>
+                                </select>
+                            </div>
+                            <div class="setting-item">
+                                <label>Mob Spawn Range: <span id="mob-spawn-range-val"
+                                        style="color: var(--accent-light); float: right;">3</span></label>
+                                <input type="range" id="mob-spawn-range" min="2" max="8" value="3"
+                                    oninput="updateValue('mob-spawn-range-val', this.value); generatePreview('spigot')">
+                            </div>
+                        </div>
+
+                        <div class="animate-slide-in card">
+                            <h3>Entity Activation Range</h3>
+                            <div class="setting-item">
+                                <label>Animals: <span id="ear-animals-val"
+                                        style="color: var(--accent-light); float: right;">16</span></label>
+                                <input type="range" id="ear-animals" min="8" max="48" value="16"
+                                    oninput="updateValue('ear-animals-val', this.value); generatePreview('spigot')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Monsters: <span id="ear-monsters-val"
+                                        style="color: var(--accent-light); float: right;">24</span></label>
+                                <input type="range" id="ear-monsters" min="8" max="48" value="24"
+                                    oninput="updateValue('ear-monsters-val', this.value); generatePreview('spigot')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Villagers: <span id="ear-villagers-val"
+                                        style="color: var(--accent-light); float: right;">16</span></label>
+                                <input type="range" id="ear-villagers" min="8" max="48" value="16"
+                                    oninput="updateValue('ear-villagers-val', this.value); generatePreview('spigot')">
+                            </div>
+                        </div>
+
+                        <div class="animate-slide-in card">
+                            <h3>Optimization Settings</h3>
+                            <div class="setting-item">
+                                <label style="display: flex;   align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Tick Inactive Villagers</span>
+                                    <input type="checkbox" id="tick-inactive-villagers"
+                                        onchange="generatePreview('spigot')">
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label style="display: flex;   align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Nerf Spawner Mobs</span>
+                                    <input type="checkbox" id="nerf-spawner-mobs" checked
+                                        onchange="generatePreview('spigot')">
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label>Hopper Transfer: <span id="hopper-transfer-val"
+                                        style="color: var(--accent-light); float: right;">8</span></label>
+                                <input type="range" id="hopper-transfer" min="4" max="16" value="8"
+                                    oninput="updateValue('hopper-transfer-val', this.value); generatePreview('spigot')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Hopper Check: <span id="hopper-check-val"
+                                        style="color: var(--accent-light); float: right;">8</span></label>
+                                <input type="range" id="hopper-check" min="1" max="16" value="8"
+                                    oninput="updateValue('hopper-check-val', this.value); generatePreview('spigot')">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="info-card">
+                            <h3 style="margin-bottom: 12px;">Configuration Info</h3>
+                            <p><strong>Entity Activation Range:</strong> Distance at which entities become active</p>
+                            <p><strong>Tick Inactive Villagers:</strong> Disable to save CPU</p>
+                            <p><strong>Hopper Check:</strong> Higher values reduce hopper performance but save CPU</p>
+                            <p><strong>Mob Spawn Range:</strong> Lower values increase mob density near players</p>
+                        </div>
+
+                        <div class="card">
+                            <h3 style="margin-bottom: 12px;">Preview</h3>
+                            <div class="config-output custom-scrollbar">
+                                <pre id="spigot-preview"
+                                    style="margin: 0; font-size: 12px; white-space: pre-wrap;">Configuration preview will appear here...</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Server Properties Tab -->
+            <div id="content-server" class="tab-content">
+                <div class="grid-layout">
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="animate-slide-in card">
+                            <h3>World Settings</h3>
+                            <div class="setting-item">
+                                <label>View Distance: <span id="server-view-val"
+                                        style="color: var(--accent-light); float: right;">7</span></label>
+                                <input type="range" id="server-view-distance" min="3" max="15" value="7"
+                                    oninput="updateValue('server-view-val', this.value); generatePreview('server')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Simulation Distance: <span id="server-sim-val"
+                                        style="color: var(--accent-light); float: right;">4</span></label>
+                                <input type="range" id="server-sim-distance" min="3" max="10" value="4"
+                                    oninput="updateValue('server-sim-val', this.value); generatePreview('server')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Max Players: <span id="max-players-val"
+                                        style="color: var(--accent-light); float: right;">50</span></label>
+                                <input type="range" id="max-players" min="5" max="200" value="50" step="5"
+                                    oninput="updateValue('max-players-val', this.value); generatePreview('server')">
+                            </div>
+                            <div class="setting-item">
+                                <label style="display: flex;   align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Allow Nether</span>
+                                    <input type="checkbox" id="allow-nether" checked
+                                        onchange="generatePreview('server')">
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label style="display: flex;   align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Generate Structures</span>
+                                    <input type="checkbox" id="generate-structures" checked
+                                        onchange="generatePreview('server')">
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label style="display: flex;   align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Spawn Animals</span>
+                                    <input type="checkbox" id="spawn-animals-server" checked
+                                        onchange="generatePreview('server')">
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label style="display: flex;   align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Spawn Monsters</span>
+                                    <input type="checkbox" id="spawn-monsters-server" checked
+                                        onchange="generatePreview('server')">
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label style="display: flex;   align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Spawn NPCs</span>
+                                    <input type="checkbox" id="spawn-npcs" checked onchange="generatePreview('server')">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="animate-slide-in card">
+                            <h3>Game Settings</h3>
+                            <div class="setting-item">
+                                <label>Difficulty</label>
+                                <select id="difficulty" onchange="generatePreview('server')">
+                                    <option value="peaceful">Peaceful</option>
+                                    <option value="easy">Easy</option>
+                                    <option value="normal" selected>Normal</option>
+                                    <option value="hard">Hard</option>
+                                </select>
+                            </div>
+                            <div class="setting-item">
+                                <label>Gamemode</label>
+                                <select id="gamemode" onchange="generatePreview('server')">
+                                    <option value="survival" selected>Survival</option>
+                                    <option value="creative">Creative</option>
+                                    <option value="adventure">Adventure</option>
+                                    <option value="spectator">Spectator</option>
+                                </select>
+                            </div>
+                            <div class="setting-item">
+                                <label style="display: flex;   align-items: center; cursor: pointer; margin: 0;">
+                                    <span>PvP</span>
+                                    <input type="checkbox" id="pvp" checked onchange="generatePreview('server')">
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label style="display: flex;   align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Hardcore</span>
+                                    <input type="checkbox" id="hardcore" onchange="generatePreview('server')">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="animate-slide-in card">
+                            <h3>Server Identity</h3>
+                            <div class="setting-item">
+                                <label>MOTD (Message of the Day)</label>
+                                <input type="text" id="motd" value="Kohinoor Hira" oninput="generatePreview('server')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Server Port</label>
+                                <input type="number" id="server-port" value="25565" oninput="generatePreview('server')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Network Compression Threshold: <span id="network-compression-val"
+                                        style="color: var(--accent-light); float: right;">256</span></label>
+                                <input type="range" id="network-compression-threshold" min="-1" max="512" value="256"
+                                    step="1"
+                                    oninput="updateValue('network-compression-val', this.value); generatePreview('server')">
+                            </div>
+                            <div class="setting-item">
+                                <label style="display: flex;   align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Sync Chunk Writes</span>
+                                    <input type="checkbox" id="sync-chunk-writes" checked
+                                        onchange="generatePreview('server')">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="info-card">
+                            <h3 style="margin-bottom: 12px;">Configuration Info</h3>
+                            <p><strong>View Distance:</strong> Chunks sent to players (affects bandwidth)</p>
+                            <p><strong>Simulation Distance:</strong> Chunks actively ticking (affects CPU)</p>
+                            <p><strong>Max Players:</strong> Maximum concurrent players</p>
+                            <p><strong>MOTD:</strong> Server list message display</p>
+                            <p><strong>Network Compression:</strong> Higher values save CPU but increase bandwidth</p>
+                            <p><strong>Sync Chunk Writes:</strong> Disable for non-Paper servers to reduce main thread
+                                load</p>
+                        </div>
+
+                        <div class="card">
+                            <h3 style="margin-bottom: 12px;">Preview</h3>
+                            <div class="config-output custom-scrollbar">
+                                <pre id="server-preview"
+                                    style="margin: 0; font-size: 12px; white-space: pre-wrap;">Configuration preview will appear here...</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paper World Tab -->
+            <div id="content-paper" class="tab-content">
+                <div class="grid-layout">
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="animate-slide-in card">
+                            <h3>Chunk Settings</h3>
+                            <div class="setting-item">
+                                <label>Delay Chunk Unloads (seconds): <span id="delay-unload-val"
+                                        style="color: var(--accent-light); float: right;">10</span></label>
+                                <input type="range" id="delay-chunk-unloads" min="5" max="30" value="10"
+                                    oninput="updateValue('delay-unload-val', this.value); generatePreview('paper')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Max Auto-Save Chunks Per Tick: <span id="max-save-val"
+                                        style="color: var(--accent-light); float: right;">8</span></label>
+                                <input type="range" id="max-auto-save" min="4" max="24" value="8"
+                                    oninput="updateValue('max-save-val', this.value); generatePreview('paper')">
+                            </div>
+                            <div class="setting-item">
+                                <label style="display: flex;   align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Prevent Moving Into Unloaded Chunks</span>
+                                    <input type="checkbox" id="prevent-unloaded" checked
+                                        onchange="generatePreview('paper')">
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label style="display: flex;   align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Optimize Explosions</span>
+                                    <input type="checkbox" id="optimize-explosions" checked
+                                        onchange="generatePreview('paper')">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="animate-slide-in card">
+                            <h3>Despawn Ranges</h3>
+                            <div class="setting-item">
+                                <label>Soft Range: <span id="despawn-soft-val"
+                                        style="color: var(--accent-light); float: right;">30</span></label>
+                                <input type="range" id="despawn-soft" min="16" max="48" value="30"
+                                    oninput="updateValue('despawn-soft-val', this.value); generatePreview('paper')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Hard Range: <span id="despawn-hard-val"
+                                        style="color: var(--accent-light); float: right;">72</span></label>
+                                <input type="range" id="despawn-hard" min="48" max="128" value="72"
+                                    oninput="updateValue('despawn-hard-val', this.value); generatePreview('paper')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Non-Player Arrow Despawn: <span id="non-player-arrow-val"
+                                        style="color: var(--accent-light); float: right;">20</span></label>
+                                <input type="range" id="non-player-arrow-despawn" min="10" max="60" value="20"
+                                    oninput="updateValue('non-player-arrow-val', this.value); generatePreview('paper')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Creative Arrow Despawn: <span id="creative-arrow-val"
+                                        style="color: var(--accent-light); float: right;">20</span></label>
+                                <input type="range" id="creative-arrow-despawn" min="10" max="60" value="20"
+                                    oninput="updateValue('creative-arrow-val', this.value); generatePreview('paper')">
+                            </div>
+                        </div>
+
+                        <div class="animate-slide-in card">
+                            <h3>Anti-Xray Settings</h3>
+                            <div class="setting-item">
+                                <label style="display: flex;   align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Enable Anti-Xray</span>
+                                    <input type="checkbox" id="anti-xray" checked onchange="generatePreview('paper')">
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label>Engine Mode</label>
+                                <select id="xray-engine" onchange="generatePreview('paper')">
+                                    <option value="1" selected>Mode 1</option>
+                                    <option value="2">Mode 2</option>
+                                </select>
+                            </div>
+                            <div class="setting-item">
+                                <label>Max Block Height: <span id="xray-height-val"
+                                        style="color: var(--accent-light); float: right;">64</span></label>
+                                <input type="range" id="xray-height" min="0" max="256" value="64"
+                                    oninput="updateValue('xray-height-val', this.value); generatePreview('paper')">
+                            </div>
+                        </div>
+
+                        <div class="animate-slide-in card">
+                            <h3>Item Despawn Rates</h3>
+                            <div class="setting-item">
+                                <label>Cobblestone: <span id="despawn-cobblestone-val"
+                                        style="color: var(--accent-light); float: right;">300</span></label>
+                                <input type="range" id="despawn-cobblestone" min="100" max="600" value="300" step="50"
+                                    oninput="updateValue('despawn-cobblestone-val', this.value); generatePreview('paper')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Netherrack: <span id="despawn-netherrack-val"
+                                        style="color: var(--accent-light); float: right;">300</span></label>
+                                <input type="range" id="despawn-netherrack" min="100" max="600" value="300" step="50"
+                                    oninput="updateValue('despawn-netherrack-val', this.value); generatePreview('paper')">
+                            </div>
+                            <div class="setting-item">
+                                <label>Sand: <span id="despawn-sand-val"
+                                        style="color: var(--accent-light); float: right;">300</span></label>
+                                <input type="range" id="despawn-sand" min="100" max="600" value="300" step="50"
+                                    oninput="updateValue('despawn-sand-val', this.value); generatePreview('paper')">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="info-card">
+                            <h3 style="margin-bottom: 12px;">Configuration Info</h3>
+                            <p><strong>Delay Chunk Unloads:</strong> Time before unloading inactive chunks</p>
+                            <p><strong>Max Auto-Save:</strong> Chunks saved per tick (lower is faster)</p>
+                            <p><strong>Despawn Ranges:</strong> Soft = despawn when no players nearby, Hard = immediate
+                                despawn</p>
+                            <p><strong>Anti-Xray:</strong> Prevents players from seeing hidden ores</p>
+                            <p><strong>Item Despawn Rates:</strong> Time in ticks before items despawn</p>
+                        </div>
+
+                        <div class="card">
+                            <h3 style="margin-bottom: 12px;">Preview</h3>
+                            <div class="config-output custom-scrollbar">
+                                <pre id="paper-preview"
+                                    style="margin: 0; font-size: 12px; white-space: pre-wrap;">Configuration preview will appear here...</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Purpur Tab -->
+            <div id="content-purpur" class="tab-content">
+                <div class="grid-layout">
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="animate-slide-in card">
+                            <h3>Network Settings</h3>
+                            <div class="setting-item">
+                                <label style="display: flex;   align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Use Alternate Keepalive</span>
+                                    <input type="checkbox" id="use-alternate-keepalive" checked
+                                        onchange="generatePreview('purpur')">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="animate-slide-in card">
+                            <h3>Entity Settings</h3>
+                            <div class="setting-item">
+                                <label style="display: flex;   align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Disable Dolphin Treasure Searching</span>
+                                    <input type="checkbox" id="dolphin-treasure" checked
+                                        onchange="generatePreview('purpur')">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="animate-slide-in card">
+                            <h3>World Settings</h3>
+                            <div class="setting-item">
+                                <label style="display: flex;   align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Teleport If Outside Border</span>
+                                    <input type="checkbox" id="teleport-outside-border" checked
+                                        onchange="generatePreview('purpur')">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div class="info-card">
+                            <h3 style="margin-bottom: 12px;">Configuration Info</h3>
+                            <p><strong>Alternate Keepalive:</strong> Prevents player timeouts (incompatible with
+                                TCPShield)</p>
+                            <p><strong>Dolphin Treasure:</strong> Disable to prevent dolphin structure searches</p>
+                            <p><strong>Teleport Outside Border:</strong> Teleports players to spawn if outside world
+                                border</p>
+                        </div>
+
+                        <div class="card">
+                            <h3 style="margin-bottom: 12px;">Preview</h3>
+                            <div class="config-output custom-scrollbar">
+                                <pre id="purpur-preview"
+                                    style="margin: 0; font-size: 12px; white-space: pre-wrap;">Configuration preview will appear here...</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Download Buttons -->
+            <div
+                style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <button onclick="downloadConfig(getCurrentTab())" class="btn btn-primary" style="padding: 16px 24px;">
+                    <svg style="display: inline; width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    Download Current Config
+                </button>
+                <button onclick="downloadAll()" class="btn btn-primary" style="padding: 16px 24px;">
+                    <svg style="display: inline; width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Download All Configs
+                </button>
+                <button onclick="resetDefaults()" class="btn"
+                    style="padding: 16px 24px; border-color: rgba(239, 68, 68, 0.5);">
+                    <svg style="display: inline; width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    Reset to Defaults
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="padding: 32px; text-align: center; color: var(--text-muted); font-size: 13px;">
+            <p style="opacity: 0.8; margin: 8px 0;">Generated configurations are optimized for performance. Always
+                backup your original files before replacing them.</p>
+            <p style="opacity: 0.8; margin: 8px 0;">Based on the optimization guide by <a
+                    href="https://github.com/YouHaveTrouble/minecraft-optimization"
+                    style="color: var(--accent-light); text-decoration: underline;" target="_blank">YouHaveTrouble</a>
+                and <a href="https://www.spigotmc.org/threads/guide-server-optimization%E2%9A%A1.283181/"
+                    style="color: var(--accent-light); text-decoration: underline;" target="_blank">Celebrimbor</a>.</p>
+            <p style="opacity: 0.8; margin: 8px 0;">Made with 🤍 by <a href="https://hsinghhira.me"
+                    style="color: var(--accent-light); text-decoration: underline;" target="_blank">Harman Singh
+                    Hira</a> in <a href="https://en.wikipedia.org/wiki/Aotearoa"
+                    style="color: var(--accent-light); text-decoration: underline;" target="_blank">Aotearoa</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Initialize on load
+        window.onload = function () {
+            generatePreview('bukkit');
+        };
+
+        // Update slider values
+        function updateValue(id, value) {
+            document.getElementById(id).textContent = value;
+        }
+
+        // Switch tabs
+        function switchTab(tab) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById('content-' + tab).classList.add('active');
+            event.target.classList.add('active');
+
+            // Generate preview for current tab
+            generatePreview(tab);
+        }
+
+        // Get current tab
+        function getCurrentTab() {
+            const activeTab = document.querySelector('.tab-content.active');
+            return activeTab.id.replace('content-', '');
+        }
+
+        // Generate preview
+        function generatePreview(tab) {
+            let config = '';
+
+            if (tab === 'bukkit') {
+                config = `# Bukkit Configuration File
+
+spawn-limits:
+  monsters: ${document.getElementById('spawn-monsters').value}
+  animals: ${document.getElementById('spawn-animals').value}
+  water-animals: ${document.getElementById('spawn-water-animals').value}
+  water-ambient: ${document.getElementById('spawn-water-ambient').value}
+  water-underground-creature: ${document.getElementById('spawn-water-underground').value}
+  axolotls: ${document.getElementById('spawn-axolotls').value}
+  ambient: ${document.getElementById('spawn-ambient').value}
+
+chunk-gc:
+  period-in-ticks: 400
+
+ticks-per:
+  monster-spawns: ${document.getElementById('tick-monster-spawns').value}
+  animal-spawns: ${document.getElementById('tick-animal-spawns').value}
+  water-spawns: ${document.getElementById('tick-water-spawns').value}
+  water-ambient-spawns: ${document.getElementById('tick-water-ambient-spawns').value}
+  water-underground-creature-spawns: ${document.getElementById('tick-water-underground-spawns').value}
+  axolotl-spawns: ${document.getElementById('tick-axolotl-spawns').value}
+  ambient-spawns: ${document.getElementById('tick-ambient-spawns').value}
+  autosave: ${document.getElementById('tick-autosave').value}
+
+settings:
+  allow-end: ${document.getElementById('allow-end').checked}`;
+            }
+
+            else if (tab === 'spigot') {
+                const viewDist = document.getElementById('spigot-view-distance').value;
+                const simDist = document.getElementById('spigot-sim-distance').value;
+
+                config = `# Spigot Configuration File
+
+world-settings:
+  default:
+    ${viewDist !== 'default' ? `view-distance: ${viewDist}` : '# view-distance: default'}
+    ${simDist !== 'default' ? `simulation-distance: ${simDist}` : '# simulation-distance: default'}
+    mob-spawn-range: ${document.getElementById('mob-spawn-range').value}
+    
+    entity-activation-range:
+      animals: ${document.getElementById('ear-animals').value}
+      monsters: ${document.getElementById('ear-monsters').value}
+      villagers: ${document.getElementById('ear-villagers').value}
+      
+    tick-inactive-villagers: ${document.getElementById('tick-inactive-villagers').checked}
+    nerf-spawner-mobs: ${document.getElementById('nerf-spawner-mobs').checked}
+    
+    hopper-transfer: ${document.getElementById('hopper-transfer').value}
+    hopper-check: ${document.getElementById('hopper-check').value}`;
+            }
+
+            else if (tab === 'server') {
+                config = `# Server Properties File
+
+view-distance=${document.getElementById('server-view-distance').value}
+simulation-distance=${document.getElementById('server-sim-distance').value}
+max-players=${document.getElementById('max-players').value}
+allow-nether=${document.getElementById('allow-nether').checked}
+generate-structures=${document.getElementById('generate-structures').checked}
+spawn-animals=${document.getElementById('spawn-animals-server').checked}
+spawn-monsters=${document.getElementById('spawn-monsters-server').checked}
+spawn-npcs=${document.getElementById('spawn-npcs').checked}
+difficulty=${document.getElementById('difficulty').value}
+gamemode=${document.getElementById('gamemode').value}
+pvp=${document.getElementById('pvp').checked}
+hardcore=${document.getElementById('hardcore').checked}
+motd=${document.getElementById('motd').value}
+server-port=${document.getElementById('server-port').value}
+network-compression-threshold=${document.getElementById('network-compression-threshold').value}
+sync-chunk-writes=${document.getElementById('sync-chunk-writes').checked}`;
+            }
+
+            else if (tab === 'paper') {
+                config = `# Paper World Configuration File
+
+chunks:
+  delay-chunk-unloads-by: ${document.getElementById('delay-chunk-unloads').value}s
+  max-auto-save-chunks-per-tick: ${document.getElementById('max-auto-save').value}
+  prevent-moving-into-unloaded-chunks: ${document.getElementById('prevent-unloaded').checked}
+
+entities:
+  spawning:
+    despawn-ranges:
+      soft: ${document.getElementById('despawn-soft').value}
+      hard: ${document.getElementById('despawn-hard').value}
+  behavior:
+    non-player-arrow-despawn-rate: ${document.getElementById('non-player-arrow-despawn').value}
+    creative-arrow-despawn-rate: ${document.getElementById('creative-arrow-despawn').value}
+
+misc:
+  optimize-explosions: ${document.getElementById('optimize-explosions').checked}
+
+anticheat:
+  anti-xray:
+    enabled: ${document.getElementById('anti-xray').checked}
+    engine-mode: ${document.getElementById('xray-engine').value}
+    max-block-height: ${document.getElementById('xray-height').value}
+
+alt-item-despawn-rate:
+  enabled: true
+  items:
+    COBBLESTONE: ${document.getElementById('despawn-cobblestone').value}
+    NETHERRACK: ${document.getElementById('despawn-netherrack').value}
+    SAND: ${document.getElementById('despawn-sand').value}`;
+            }
+
+            else if (tab === 'purpur') {
+                config = `# Purpur Configuration File
+
+settings:
+  network:
+    use-alternate-keepalive: ${document.getElementById('use-alternate-keepalive').checked}
+
+world-settings:
+  default:
+    mobs:
+      dolphin:
+        disable-treasure-searching: ${document.getElementById('dolphin-treasure').checked}
+    
+    gameplay-mechanics:
+      teleport-if-outside-border: ${document.getElementById('teleport-outside-border').checked}`;
+            }
+
+            document.getElementById(tab + '-preview').textContent = config;
+        }
+
+        // Download config
+        function downloadConfig(tab) {
+            const config = document.getElementById(tab + '-preview').textContent;
+            const filename = tab === 'server' ? 'server.properties' : tab + '.yml';
+
+            const blob = new Blob([config], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Download all configs
+        function downloadAll() {
+            ['bukkit', 'spigot', 'server', 'paper', 'purpur'].forEach(tab => {
+                generatePreview(tab);
+                setTimeout(() => downloadConfig(tab), 100);
+            });
+        }
+
+        // Reset to defaults
+        function resetDefaults() {
+            if (confirm('Are you sure you want to reset all settings to defaults?')) {
+                location.reload();
+            }
+        }
+
+        // Add event listeners to all checkboxes
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                generatePreview(getCurrentTab());
+            });
+        });
+    </script>
+</body>
+
+</html>

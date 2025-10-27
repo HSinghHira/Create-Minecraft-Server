@@ -1,0 +1,251 @@
+ @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --bg-primary: #37353E;
+            --bg-secondary: #44444E;
+            --accent-primary: #715A5A;
+            --accent-light: #D3DAD9;
+            --text-primary: #f7fafc;
+            --text-muted: #a0aec0;
+            --card-bg: #44444E;
+        }
+
+        * {
+            font-family: 'Inter', sans-serif;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            padding: 28px;
+            min-height: 100vh;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .tool-card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-light));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-light);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        .tool-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .tool-card:active {
+            transform: translateY(-4px);
+        }
+
+        .tool-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(113, 90, 90, 0.2), rgba(211, 218, 217, 0.2));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover .tool-icon {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-light));
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .tool-icon svg {
+            width: 48px;
+            height: 48px;
+            color: var(--accent-light);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover .tool-icon svg {
+            color: var(--text-primary);
+            transform: scale(1.1);
+        }
+
+        h1 {
+            font-size: 32px !important;
+            margin: 0 0 12px 0!important;
+            font-weight: 700!important;
+            background: linear-gradient(135deg, var(--accent-light), var(--text-primary))!important;
+            -webkit-background-clip: text!important;
+            -webkit-text-fill-color: transparent!important;
+            background-clip: text!important;
+        }
+
+        h2 {
+            font-size: 24px!important;
+            margin: 0 0 12px 0!important;
+            font-weight: 600!important;
+            color: var(--text-primary);
+        }
+
+        h3 {
+            font-size: 18px;
+            margin: 0 0 12px 0;
+            font-weight: 600;
+        }
+
+        .header-meta {
+            color: var(--text-muted);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-light));
+            color: var(--text-primary);
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 16px;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        @media (max-width: 768px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 32px !important;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .animate-delay-1 {
+            animation-delay: 0.1s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .animate-delay-2 {
+            animation-delay: 0.2s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .animate-delay-3 {
+            animation-delay: 0.3s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0 0 0;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .feature-list li svg {
+            width: 16px;
+            height: 16px;
+            color: var(--accent-light);
+            flex-shrink: 0;
+        }
+
+        .coming-soon {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .coming-soon-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(211, 218, 217, 0.2);
+            color: var(--accent-light);
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .hero-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 24px;
+            background: linear-gradient(135deg, rgba(113, 90, 90, 0.2), rgba(211, 218, 217, 0.2));
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-icon svg {
+            width: 72px;
+            height: 72px;
+            color: var(--accent-light);
+        }

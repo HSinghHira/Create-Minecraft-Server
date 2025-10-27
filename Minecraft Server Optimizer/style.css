@@ -1,0 +1,282 @@
+ @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --bg-primary: #37353E;
+            --bg-secondary: #44444E;
+            --accent-primary: #715A5A;
+            --accent-light: #D3DAD9;
+            --text-primary: #f7fafc;
+            --text-muted: #a0aec0;
+            --card-bg: #44444E;
+        }
+
+        * {
+            font-family: 'Inter', sans-serif;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            padding: 28px;
+            min-height: 100vh;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+            transition: all 0.22s;
+        }
+
+        .btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-primary);
+            transition: all 0.2s;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            transform: scale(1.03);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--accent-light);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-light));
+            color: var(--text-primary);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: scale(1.03);
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px !important;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--text-primary);
+            transition: all 0.2s;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent-light);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.2);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-light));
+            cursor: pointer;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-light));
+            cursor: pointer;
+            border: none;
+        }
+
+        /* Target only labels containing a checkbox */
+        label:has(input[type="checkbox"]) {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        label:has(input[type="checkbox"]) input[type="checkbox"] {
+            margin-left: auto;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            accent-color: var(--accent-light);
+        }
+
+        /* Ensure other labels are unaffected */
+        label:not(:has(input[type="checkbox"])) {
+            display: block;
+            /* or whatever default style for other labels, e.g., View Distance */
+        }
+
+        .tab-button {
+            padding: 10px 20px;
+            background: rgb(55 65 81 / 0.5);
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.2s;
+            font-weight: 500;
+            border: none;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-light));
+            color: var(--text-primary);
+        }
+
+        .tab-button:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .config-output {
+            background: #1e293b;
+            color: #e2e8f0;
+            font-family: 'Courier New', monospace;
+            padding: 16px;
+            border-radius: 8px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-light));
+            border-radius: 4px;
+        }
+
+        h1 {
+            font-size: 32px!important;
+            margin: 0 0 8px 0;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin: 0 0 16px 0;
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 18px;
+            margin: 0 0 12px 0 !important;
+            font-weight: 600;
+        }
+
+        .header-meta {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 980px) {
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .setting-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .setting-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, rgba(113, 90, 90, 0.2), rgba(211, 218, 217, 0.2));
+            border: 2px solid rgba(211, 218, 217, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .info-card p {
+            margin: 8px 0;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .info-card strong {
+            color: var(--text-primary);
+        }
