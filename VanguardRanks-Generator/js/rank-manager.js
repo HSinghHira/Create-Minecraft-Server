@@ -239,7 +239,7 @@ export function loadRequirements(requirements) {
       const placeholder = Object.keys(req)[0];
       const reqData = req[placeholder];
       return `
-      <div class="requirement-item card" style="padding: 16px; margin-bottom: 12px; border: 1px solid rgba(255, 255, 255, 0.1);">
+      <div class="requirement-item rounded-xl mb-2" style="padding: 16px; margin-bottom: 12px; border: 1px solid rgba(255, 255, 255, 0.1);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
           <h4 style="font-size: 14px; font-weight: 600; color: var(--text-primary);">Requirement ${index + 1}</h4>
           <button class="remove-requirement btn" style="border-color: rgba(239, 68, 68, 0.5); padding: 8px 12px;" data-index="${index}">✕</button>
