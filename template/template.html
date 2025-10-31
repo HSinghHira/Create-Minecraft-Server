@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Generator Name - Minecraft Server Tool</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>💎</text></svg>" />
+    <meta name="description" content="Your generator description here" />
+    <meta name="keywords" content="Minecraft, server, generator" />
+    <meta name="author" content="Harman Singh Hira" />
+    <meta name="robots" content="index, follow" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="mb-3 text-center">
+            <div class="icon-container">
+                <svg style="width: 64px; height: 64px; color: var(--accent-light)" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+            </div>
+            <h1>Your Generator Name</h1>
+            <p class="header-meta">Brief description of what this tool does</p>
+        </div>
+
+        <!-- Main Content Card -->
+        <div class="card">
+            <!-- Action Buttons Row -->
+            <div
+                style="display: flex; gap: 8px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap;">
+                <button id="quickRefBtn" class="btn">
+                    <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6.253v13m0-13C10.477 5.252 5.324 5.252 3 7.576 1 9.6 1 13.6 3 15.624c2.324 2.324 7.477 2.324 9 1.323m0-13C13.523 5.252 18.676 5.252 21 7.576 23 9.6 23 13.6 21 15.624c-2.324 2.324-7.477 2.324-9 1.323" />
+                    </svg>
+                    Quick Reference
+                </button>
+                <button id="importBtn" class="btn">
+                    <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    Import JSON
+                </button>
+                <button id="exportBtn" class="btn">
+                    <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Export JSON
+                </button>
+            </div>
+
+            <div class="grid">
+                <!-- Left Panel -->
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <!-- Dynamic List Card (Like Ranks) -->
+                    <div class="animate-slide-in card">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <h2>
+                                <svg style="display: inline; width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                                </svg>
+                                Items List
+                            </h2>
+                            <div style="display: flex; gap: 8px;">
+                                <button id="reorderBtn" class="btn">
+                                    <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                                    </svg>
+                                    Reorder
+                                </button>
+                                <button id="addItemBtn" class="btn btn-primary">
+                                    <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 4v16m8-8H4" />
+                                    </svg>
+                                    New Item
+                                </button>
+                            </div>
+                        </div>
+                        <div id="itemsList" style="max-height: 300px; overflow-y: auto; padding-right: 8px;"
+                            class="custom-scrollbar">
+                            <!-- Items will be listed here dynamically -->
+                            <div class="info-card" style="text-align: center; padding: 32px;">
+                                <svg style="width: 48px; height: 48px; margin: 0 auto 16px; color: var(--text-muted);"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                                </svg>
+                                <p style="color: var(--text-muted);">No items yet. Click "New Item" to get started!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Editor Card (Hidden by default) -->
+                    <div id="itemEditor" class="hidden animate-slide-in card">
+                        <!-- Tabs -->
+                        <div
+                            style="display: flex; gap: 12px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); flex-wrap: wrap;">
+                            <button class="tab active" onclick="switchTab('basic')">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                Basic
+                            </button>
+                            <button class="tab" onclick="switchTab('advanced')">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                                </svg>
+                                Advanced
+                            </button>
+                            <button class="tab" onclick="switchTab('icon')">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                                </svg>
+                                Icon
+                            </button>
+                        </div>
+
+                        <!-- Tab Content -->
+                        <div class="tab-content active" data-content="basic">
+                            <div style="display: flex; flex-direction: column; gap: 16px;">
+                                <div>
+                                    <label>Item Name (ID)<span class="help-text"
+                                            style="color: var(--text-muted); cursor: help;"
+                                            title="Add a Helping Texts here">ℹ️</span></label>
+                                    <input type="text" id="itemName" placeholder="my_item">
+                                </div>
+                                <div>
+                                    <label>Display Name</label>
+                                    <div style="display: flex; gap: 8px;">
+                                        <input type="text" id="displayName" class="flex-1" placeholder="&eAwesome Item">
+                                        <button onclick="openTextTools('displayName')" class="btn">
+                                            <svg style="display: inline; width: 18px; height: 18px; vertical-align: middle;"
+                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                                            </svg>
+                                            Text Tools
+                                        </button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label>Description</label>
+                                    <div style="display: flex; gap: 8px;">
+                                        <textarea id="description" rows="3" class="flex-1"
+                                            placeholder="Item description..."></textarea>
+                                        <button onclick="openTextTools('description')" class="btn"
+                                            style="align-self: flex-start;">
+                                            <svg style="display: inline; width: 18px; height: 18px; vertical-align: middle;"
+                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <div class="setting-item" bis_skin_checked="1">
+                                        <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                            <span>One Time Kit</span>
+                                            <input type="checkbox" id="oneTime">
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-content" data-content="advanced">
+                            <div style="display: flex; flex-direction: column; gap: 16px;">
+                                <div>
+                                    <label>Advanced Setting 1</label>
+                                    <input type="text" placeholder="Value...">
+                                </div>
+                                <div>
+                                    <label>Advanced Setting 2</label>
+                                    <select>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
+                                        <option>Option 3</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="tab-content" data-content="icon">
+                            <div style="display: flex; flex-direction: column; gap: 16px;">
+                                <div>
+                                    <label>Icon Type</label>
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                                        <button class="icon-type-btn active" data-type="material">
+                                            <div
+                                                style="display: flex; justify-content: center; align-items: center; margin-bottom: 4px;">
+                                                <svg style="width: 24px; height: 24px; color: var(--accent-light);"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-14L4 7m8 4v10M4 7v10l8 4" />
+                                                </svg>
+                                            </div>
+                                            <div style="font-weight: 600; font-size: 14px;">Material</div>
+                                        </button>
+                                        <button class="icon-type-btn" data-type="head">
+                                            <div
+                                                style="display: flex; justify-content: center; align-items: center; margin-bottom: 4px;">
+                                                <svg style="width: 24px; height: 24px; color: var(--accent-light);"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                                </svg>
+                                            </div>
+                                            <div style="font-weight: 600; font-size: 14px;">Custom Head</div>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Material Section -->
+                                <div id="materialIconSection">
+                                    <label>Material</label>
+                                    <input type="text" id="iconMaterial" list="materials" placeholder="COBBLESTONE">
+                                    <datalist id="materials">
+                                        <option value="WOODEN_SWORD"></option>
+                                        <option value="STONE_SWORD"></option>
+                                        <option value="IRON_SWORD"></option>
+                                    </datalist>
+                                </div>
+
+                                <!-- Custom Head Section -->
+                                <div id="headIconSection" class="hidden">
+                                    <label>Head Texture (Base64)
+                                        <span style="color: var(--text-muted); font-size: 12px; cursor: help;"
+                                            title="Get from minecraft-heads.com or use a head database">ℹ️</span>
+                                    </label>
+                                    <textarea id="iconHeadTexture" rows="3"
+                                        placeholder="eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90..."
+                                        style="font-family: 'Courier New', monospace; font-size: 12px;"></textarea>
+                                    <p style="font-size: 12px; color: var(--text-muted); margin-top: 8px;">Format:
+                                        head:YOUR_BASE64_STRING</p>
+                                </div>
+
+                                <!-- Amount and Custom Model Data -->
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                    <div>
+                                        <label>Amount</label>
+                                        <input type="number" id="iconAmount" min="1" max="64" value="1">
+                                    </div>
+                                    <div>
+                                        <label>Custom Model Data</label>
+                                        <input type="number" id="iconModelData" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div
+                            style="display: flex; gap: 8px; margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.1); flex-wrap: wrap;">
+                            <button id="saveItemBtn" class="btn btn-primary" style="flex: 1; padding: 16px;">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                                </svg>
+                                Save Item
+                            </button>
+                            <button id="duplicateItemBtn" class="btn" style="flex: 1; padding: 16px;">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                </svg>
+                                Duplicate
+                            </button>
+                            <button id="deleteItemBtn" class="btn"
+                                style="flex: 1; padding: 16px; border-color: rgba(239, 68, 68, 0.5);">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Example Kits Section -->
+                    <div class="card" bis_skin_checked="1">
+                        <h3>📦 Load Example Kit</h3>
+                        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">Quick start with
+                            pre-configured example kits</p>
+                        <div class="grid-2" bis_skin_checked="1">
+                            <button class="template-btn" onclick="loadExampleKit('starter')">
+                                <h4>🌱 Starter Kit</h4>
+                                <p>Basic tools and food for new players</p>
+                            </button>
+                            <button class="template-btn" onclick="loadExampleKit('armor')">
+                                <h4>🛡️ Armor Kit</h4>
+                                <p>Full diamond armor set with enchants</p>
+                            </button>
+                            <button class="template-btn" onclick="loadExampleKit('pvp')">
+                                <h4>⚔️ PvP Kit</h4>
+                                <p>Combat gear for PvP battles</p>
+                            </button>
+                            <button class="template-btn" onclick="loadExampleKit('builder')">
+                                <h4>🏗️ Builder Kit</h4>
+                                <p>Building blocks and tools</p>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Info Box Examples -->
+                    <div class="info-box info-box-info">
+                        <svg class="info-box-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <div class="info-box-content">
+                            <div class="info-box-title">Information</div>
+                            <p class="info-box-text">This is an informational message with helpful details.</p>
+                        </div>
+                    </div>
+
+                    <div class="info-box info-box-success">
+                        <svg class="info-box-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <div class="info-box-content">
+                            <div class="info-box-title">Success</div>
+                            <p class="info-box-text">Your configuration was saved successfully!</p>
+                        </div>
+                    </div>
+
+                    <div class="info-box info-box-warning">
+                        <svg class="info-box-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        <div class="info-box-content">
+                            <div class="info-box-title">Warning</div>
+                            <p class="info-box-text">Please review your settings before proceeding.</p>
+                        </div>
+                    </div>
+
+                    <div class="info-box info-box-error">
+                        <svg class="info-box-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <div class="info-box-content">
+                            <div class="info-box-title">Error</div>
+                            <p class="info-box-text">Invalid configuration detected. Please check your input.</p>
+                        </div>
+                    </div>
+
+                    <div class="info-box info-box-tip">
+                        <svg class="info-box-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                        <div class="info-box-content">
+                            <div class="info-box-title">Pro Tip</div>
+                            <p class="info-box-text">Use keyboard shortcuts <kbd>Ctrl</kbd> + <kbd>S</kbd> to save
+                                quickly!</p>
+                        </div>
+                    </div>
+
+                    <!-- Typography Examples -->
+                    <p>This is a paragraph with <code>inline code</code> and <strong>strong text</strong>.</p>
+
+                    <p>Use <kbd>Ctrl</kbd> + <kbd>C</kbd> to copy and <kbd>Ctrl</kbd> + <kbd>V</kbd> to paste.</p>
+
+                    <pre>
+                        <code>
+                            // This is a code block
+                                function example() {
+                                return "Hello World";
+                            }
+                        </code>
+                    </pre>
+
+                    <blockquote>
+                        <p>This is a blockquote with important information or a citation.</p>
+                    </blockquote>
+
+                    <p>This text has <mark>highlighted content</mark> for emphasis.</p>
+
+                    <hr>
+
+                    <p><small>This is small text, often used for disclaimers or footnotes.</small></p>
+
+                    <p>Hover over <abbr title="HyperText Markup Language">HTML</abbr> to see the full term.</p>
+                </div>
+
+                <!-- Right Panel -->
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <!-- Info Card -->
+                    <div class="info-card">
+                        <h3>
+                            <svg style="display: inline; width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Information
+                        </h3>
+                        <p><strong>Tip 1:</strong> Use the Text Tools button for RGB colors and fancy fonts</p>
+                        <p><strong>Tip 2:</strong> Import/Export JSON to save your work</p>
+                        <p><strong>Tip 3:</strong> Drag items to reorder them</p>
+                    </div>
+
+                    <!-- Status Card -->
+                    <div class="card">
+                        <h3>
+                            <svg style="display: inline; width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                            </svg>
+                            Status
+                        </h3>
+                        <p style="font-size: 14px; margin: 8px 0;">
+                            <strong>Total Items:</strong>
+                            <span id="totalItems" style="color: var(--accent-light); font-weight: 700;">0</span>
+                        </p>
+                        <p style="font-size: 14px; margin: 8px 0;">
+                            <strong>Configuration:</strong>
+                            <span style="color: var(--accent-light); font-weight: 700;">Ready</span>
+                        </p>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <button id="downloadBtn" class="btn btn-primary" style="width: 100%; padding: 16px;">
+                        <svg style="display: inline; width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Download Configuration
+                    </button>
+
+                    <button id="validateBtn" class="btn" style="width: 100%; padding: 16px;">
+                        <svg style="display: inline; width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Validate Configuration
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="padding: 32px; text-align: center; color: var(--text-muted); font-size: 13px;">
+            <p style="opacity: 0.8; margin: 8px 0;">Your footer text and disclaimers</p>
+            <p style="opacity: 0.8; margin: 8px 0;">Open-source tools designed for the Minecraft community</p>
+            <p style="opacity: 0.8; margin: 8px 0;">
+                Made with <span class="heart">🤍</span> by
+                <a href="https://hsinghhira.me" style="color: var(--accent-light); text-decoration: underline"
+                    target="_blank">Harman Singh Hira</a>
+                in
+                <a href="https://en.wikipedia.org/wiki/Aotearoa"
+                    style="color: var(--accent-light); text-decoration: underline" target="_blank">Aotearoa</a>
+            </p>
+            <p style="opacity: 0.6; margin: 16px 0 0 0; font-size: 11px;">
+                All tools are free and open-source • No data collection • Works offline
+            </p>
+        </div>
+    </div>
+
+    <!-- Quick Reference Modal -->
+    <div id="quickRefModal" class="hidden modal-overlay">
+        <div class="modal-content" style="max-width: 800px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <h3 style="margin: 0; display: flex; align-items: center;">
+                    <svg style="width: 20px; height: 20px; margin-right: 8px; color: var(--accent-light);" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6.253v13m0-13C10.477 5.252 5.324 5.252 3 7.576 1 9.6 1 13.6 3 15.624c2.324 2.324 7.477 2.324 9 1.323m0-13C13.523 5.252 18.676 5.252 21 7.576 23 9.6 23 13.6 21 15.624c-2.324 2.324-7.477 2.324-9 1.323" />
+                    </svg>
+                    Quick Reference
+                </h3>
+                <button onclick="closeModal('quickRefModal')"
+                    style="font-size: 24px; color: var(--text-muted); cursor: pointer; background: none; border: none;">✕</button>
+            </div>
+
+            <div style="display: grid; gap: 16px;">
+                <!-- Color Codes -->
+                <div class="info-card">
+                    <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">Minecraft Color Codes</h4>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; font-size: 12px;">
+                        <p><code>&0-9, a-f</code> - Standard colors</p>
+                        <p><code>&l</code> - Bold</p>
+                        <p><code>&m</code> - Strikethrough</p>
+                        <p><code>&n</code> - Underline</p>
+                        <p><code>&o</code> - Italic</p>
+                        <p><code>&r</code> - Reset</p>
+                        <p><code>&#RRGGBB</code> - RGB/HEX colors</p>
+                    </div>
+                </div>
+
+                <!-- Placeholders -->
+                <div class="info-card">
+                    <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">Common Placeholders</h4>
+                    <div style="display: grid; gap: 4px; font-size: 12px;">
+                        <p><code>%player%</code> - Player name</p>
+                        <p><code>%player_name%</code> - Player display name</p>
+                        <p><code>%server%</code> - Server name</p>
+                        <p><code>%world%</code> - Current world</p>
+                    </div>
+                </div>
+
+                <!-- Tips -->
+                <div class="info-card">
+                    <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">Tips & Tricks</h4>
+                    <ul style="display: grid; gap: 8px; font-size: 12px; list-style: disc; padding-left: 20px;">
+                        <li>Use Text Tools for easy RGB gradients and fancy fonts</li>
+                        <li>Export your configuration regularly to avoid data loss</li>
+                        <li>Validate your config before downloading</li>
+                        <li>Item IDs cannot contain spaces - use underscores</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Text Tools Modal (RGB + Fancy Font Combined) -->
+    <div id="textToolsModal" class="hidden modal-overlay">
+        <div class="modal-content">
+            <h3 style="display: flex; align-items: center; margin-bottom: 24px;">
+                <svg style="width: 20px; height: 20px; margin-right: 8px;" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                </svg>
+                Text Tools - All Transformations
+            </h3>
+
+            <!-- Single Text Input -->
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+                <div>
+                    <label>Text Input</label>
+                    <input type="text" id="textToolsInput" placeholder="Enter your text here"
+                        oninput="updateAllPreviews()">
+                </div>
+
+                <!-- RGB Colors Section -->
+                <div class="card" style="padding: 16px; border: 2px solid rgba(255, 255, 255, 0.1);">
+
+                    <div class="setting-item" bis_skin_checked="1">
+                        <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                            <span>RGB Gradient Colors</span>
+                            <input type="checkbox" id="enableRGB" style="width: 18px; height: 18px; margin-right: 8px;"
+                                onchange="updateAllPreviews()">
+                        </label>
+                    </div>
+
+
+                    <div id="rgbControls" style="display: grid; gap: 12px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                            <div>
+                                <label style="font-size: 12px;">Start Color</label>
+                                <div style="display: flex; gap: 4px;">
+                                    <input type="color" id="rgbStartColor" value="#00CED1"
+                                        style="width: 40px; height: 40px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 4px; cursor: pointer;"
+                                        onchange="syncColorInputs('start'); updateAllPreviews()">
+                                    <input type="text" id="rgbStartHex" value="#00CED1"
+                                        style="flex: 1; font-size: 12px;"
+                                        oninput="syncHexToColor('start'); updateAllPreviews()">
+                                </div>
+                            </div>
+                            <div>
+                                <label style="font-size: 12px;">End Color</label>
+                                <div style="display: flex; gap: 4px;">
+                                    <input type="color" id="rgbEndColor" value="#87CEEB"
+                                        style="width: 40px; height: 32px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 4px; cursor: pointer;"
+                                        onchange="syncColorInputs('end'); updateAllPreviews()">
+                                    <input type="text" id="rgbEndHex" value="#87CEEB" style="flex: 1; font-size: 12px;"
+                                        oninput="syncHexToColor('end'); updateAllPreviews()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fancy Font Section -->
+                <div class="card" style="padding: 16px; border: 2px solid rgba(255, 255, 255, 0.1);">
+
+                    <div class="setting-item" bis_skin_checked="1">
+                        <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                            <span>Fancy Small Caps Font</span>
+                            <input type="checkbox" id="enableFancy"
+                                style="width: 18px; height: 18px; margin-right: 8px;" onchange="updateAllPreviews()">
+                        </label>
+                    </div>
+
+                </div>
+
+                <!-- Preview Section -->
+                <div class="card" style="padding: 16px; background: rgba(0, 0, 0, 0.3);">
+                    <div id="combinedVisualPreview"
+                        style="font-size: 18px; font-weight: 600; color: var(--text-primary);">
+                        Enter text to see preview...
+                    </div>
+
+                </div>
+
+                <details style="margin-top: 8px;">
+                    <summary style="cursor: pointer; font-size: 12px; color: var(--text-muted);">Show Minecraft Code
+                    </summary>
+                    <code id="combinedCodePreview"
+                        style="font-size: 11px; color: var(--accent-light); word-break: break-all; display: block; margin-top: 8px;">
+                        Enter text to see preview...
+                    </code>
+                </details>
+
+                <!-- Action Buttons -->
+                <div style="display: flex; gap: 8px;">
+                    <button id="applyTextToolBtn" class="btn btn-primary" style="flex: 1; padding: 16px;">Apply</button>
+                    <button onclick="closeModal('textToolsModal')" class="btn"
+                        style="flex: 1; padding: 16px;">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Modal -->
+    <div id="importModal" class="hidden modal-overlay">
+        <div class="modal-content" style="max-width: 640px;">
+            <h3 style="display: flex; align-items: center; margin-bottom: 24px;">
+                <svg style="width: 20px; height: 20px; margin-right: 8px;" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>
+                Import JSON Configuration
+            </h3>
+            <textarea id="importJsonText" placeholder="Paste your exported JSON configuration here..."
+                style="height: 256px; font-family: 'Courier New', monospace; font-size: 14px;"></textarea>
+            <div style="display: flex; gap: 8px; margin-top: 16px;">
+                <button id="importConfirmBtn" class="btn btn-primary" style="flex: 1; padding: 16px;">Import</button>
+                <button onclick="closeModal('importModal')" class="btn" style="flex: 1; padding: 16px;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reorder Modal -->
+    <div id="reorderModal" class="hidden modal-overlay">
+        <div class="modal-content">
+            <h3 style="display: flex; align-items: center; margin-bottom: 24px;">
+                <svg style="width: 20px; height: 20px; margin-right: 8px;" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                </svg>
+                Reorder Items
+            </h3>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">Drag items to reorder them. The
+                order affects how they appear in the configuration.</p>
+            <div id="reorderList" style="max-height: 384px; overflow-y: auto; padding-right: 8px;"
+                class="custom-scrollbar">
+                <!-- Draggable items will be added here -->
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: 16px;">
+                <button id="reorderSaveBtn" class="btn btn-primary" style="flex: 1; padding: 16px;">Save Order</button>
+                <button onclick="closeModal('reorderModal')" class="btn" style="flex: 1; padding: 16px;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PlayerKits 2 - Kit Generator</title>
+   <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>💎</text></svg>">
+    </link>
+    <meta name="description" content="Professional Kit Generator for PlayerKits 2 Minecraft Plugin" />
+    <meta name="keywords" content="Minecraft, PlayerKits, Kit Generator, server" />
+    <meta name="author" content="Harman Singh Hira" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="mb-3 text-center">
+            <div class="icon-container">
+                <svg style="width: 64px; height: 64px; color: var(--accent-light)" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                </svg>
+            </div>
+            <h1>PlayerKits 2 Kit Generator</h1>
+            <p class="header-meta">Professional kit configuration generator with full customization</p>
+        </div>
+
+        <!-- Main Content Card -->
+        <div class="card">
+            <!-- Action Buttons Row -->
+            <div style="display: flex; gap: 8px;  flex-wrap: wrap;">
+                <button id="quickRefBtn" class="btn">
+                    <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 6.253v13m0-13C10.477 5.252 5.324 5.252 3 7.576 1 9.6 1 13.6 3 15.624c2.324 2.324 7.477 2.324 9 1.323m0-13C13.523 5.252 18.676 5.252 21 7.576 23 9.6 23 13.6 21 15.624c-2.324 2.324-7.477 2.324-9 1.323" />
+                    </svg>
+                    Quick Reference
+                </button>
+                <button id="importBtn" class="btn">
+                    <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    Import Kit
+                </button>
+                <button id="exportBtn" class="btn">
+                    <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Export YAML
+                </button>
+                <button id="newKitBtn" class="btn btn-primary">
+                    <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    New Kit
+                </button>
+            </div>
+
+            <div class="grid">
+                <!-- Left Panel -->
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <!-- Basic Settings -->
+                    <div class="animate-slide-in card">
+                        <h2
+                            style="margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <svg style="display: inline; width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            Basic Settings
+                        </h2>
+
+                        <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 16px;">
+                            <div class="grid-2">
+                                <div>
+                                    <label>Kit Name (Filename)
+                                        <span class="help-text"
+                                            title="This will be the filename (e.g., diamond.yml)">ℹ️</span>
+                                    </label>
+                                    <input type="text" id="kitName" placeholder="diamond">
+                                </div>
+                                <div>
+                                    <label>Cooldown (Seconds)
+                                        <span class="help-text"
+                                            title="The cooldown to claim the kit in seconds. Leave empty for no cooldown.">ℹ️</span>
+                                    </label>
+                                    <input type="number" id="cooldown" value="0" min="0">
+
+                                </div>
+                            </div>
+                            <div>
+                                <div class="setting-item">
+                                    <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                        <span>Permission Required
+                                            <span class="help-text"
+                                                title="Whether the player needs a permission to claim the kit.">ℹ️</span>
+                                        </span>
+                                        <input type="checkbox" id="permissionRequired">
+                                    </label>
+                                </div>
+                                <div class="info-box info-box-tip">
+                                    <svg class="info-box-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <div class="info-box-content">
+                                        <p class="info-box-text">
+                                            If this option is set to <code>true</code>, the player will need the
+                                            following permission to claim the kit:
+                                            <code>playerkits.kit.&lt;kit&gt;</code> (unless you use a custom permission
+                                            explained below)
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label>Custom Permission<span class="help-text"
+                                        title="Allows to customize the permission required to use the kit. permission_required must be enabled. Leave empty to use default: playerkits.kit.<kitname>">ℹ️</span></label>
+                                <input type="text" id="customPermission" placeholder="custom.permission">
+                            </div>
+                            <div class="grid-2">
+                                <div class="setting-item">
+                                    <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                        <span>One Time Only
+                                            <span class="help-text"
+                                                title="Whether the kit is only claimable once.">ℹ️</span>
+                                        </span>
+                                        <input type="checkbox" id="oneTime">
+                                    </label>
+                                </div>
+                                <div class="setting-item">
+                                    <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                        <span>Auto Equip Armor
+                                            <span class="help-text"
+                                                title="Whether kit armor should be equipped automatically when claiming the kit.">ℹ️</span>
+                                        </span>
+                                        <input type="checkbox" id="autoArmor" checked>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="grid-2">
+                                <div class="setting-item">
+                                    <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                        <span>Clear Inventory
+                                            <span class="help-text"
+                                                title="When enabled, player inventory will be emptied before giving the kit.">ℹ️</span>
+                                        </span>
+                                        <input type="checkbox" id="clearInventory">
+                                    </label>
+                                </div>
+                                <div class="setting-item">
+                                    <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                        <span>Save Original Items
+                                            <span class="help-text"
+                                                title="Whether the items from the kit should be saved as an EXACT COPY of the original items. You should not modify this option, and let the plugin add it to the config automatically when using /kit create <kit> original.">ℹ️</span>
+                                        </span>
+                                        <input type="checkbox" id="saveOriginalItems">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Items Section -->
+                    <div class="animate-slide-in card">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <h2 style="margin: 0;">
+                                <svg style="display: inline; width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                                </svg>
+                                Kit Items
+                            </h2>
+                            <button id="addItemBtn" class="btn btn-primary">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4v16m8-8H4" />
+                                </svg>
+                                Add Item
+                            </button>
+                        </div>
+                        <div id="itemsList" style="max-height: 400px; overflow-y: auto;" class="custom-scrollbar">
+                            <div class="info-card" style="text-align: center; padding: 32px;">
+                                <svg style="width: 48px; height: 48px; margin: 0 auto 16px; color: var(--text-muted);"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                                </svg>
+                                <p style="color: var(--text-muted);">No items yet. Click "Add Item" to get started!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Display Items Section -->
+                    <div class="animate-slide-in card">
+                        <h2
+                            style="margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            <svg style="display: inline; width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                            Display Items (GUI Appearance)
+                        </h2>
+                        <p style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">Configure how the kit
+                            appears in different states</p>
+                        <div class="display-state-selector">
+                            <button class="display-state-btn active" data-state="default"
+                                onclick="switchDisplayState('default')">Default</button>
+                            <button class="display-state-btn" data-state="no_permission"
+                                onclick="switchDisplayState('no_permission')">No Permission</button>
+                            <button class="display-state-btn" data-state="cooldown"
+                                onclick="switchDisplayState('cooldown')">Cooldown</button>
+                            <button class="display-state-btn" data-state="one_time"
+                                onclick="switchDisplayState('one_time')">One Time</button>
+                            <button class="display-state-btn" data-state="one_time_requirements"
+                                onclick="switchDisplayState('one_time_requirements')">One Time Req</button>
+                        </div>
+                        <div id="displayItemEditor">
+                            <!-- Display item editor will be inserted here -->
+                        </div>
+                    </div>
+
+                    <!-- Advanced Sections (Collapsible) -->
+                    <div class="animate-slide-in card">
+                        <h2
+                            style="margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                            Advanced Configuration</h2>
+
+                        <!-- Requirements Section -->
+                        <div class="collapsible-section">
+                            <div class="collapsible-header" onclick="toggleSection(this)">
+                                <span>💰 Requirements & Pricing</span>
+                                <svg style="width: 20px; height: 20px; transition: transform 0.3s;" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </div>
+                            <div class="collapsible-content">
+                                <div style="display: flex; flex-direction: column; gap: 16px;">
+                                    <!-- Price -->
+                                    <div>
+                                        <label>Price (Economy/Vault)
+                                            <span class="help-text"
+                                                title="Set a price for the kit. Requires Vault + economy plugin (e.g., EssentialsX). Use 0 for free.">ℹ️</span>
+                                        </label>
+                                        <input type="number" id="reqPrice" value="0" min="0" step="0.01"
+                                            placeholder="0">
+                                    </div>
+
+                                    <!-- One Time Requirements Toggle -->
+                                    <div class="setting-item">
+                                        <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                            <span>One Time Requirements
+                                                <span class="help-text"
+                                                    title="If true, requirements (like price) only apply once per player.">ℹ️</span>
+                                            </span>
+                                            <input type="checkbox" id="oneTimeRequirements">
+                                        </label>
+                                    </div>
+
+                                    <!-- Requirements Message (for GUI) -->
+                                    <div>
+                                        <label>Requirements Message (GUI Display)
+                                            <span class="help-text"
+                                                title="Lines shown in GUI for requirements (e.g., price status). Supports & colors and %placeholders% (PlaceholderAPI).">ℹ️</span>
+                                        </label>
+                                        <div id="reqMessageList"></div>
+                                        <button class="add-btn-small" onclick="addReqMessage()">+ Add Message
+                                            Line</button>
+                                        
+                                    </div>
+
+                                    <!-- Extra Requirements (PlaceholderAPI) -->
+                                    <div>
+                                        <label>Extra Requirements (PlaceholderAPI)
+                                            <span class="help-text"
+                                                title="Advanced checks via PlaceholderAPI (e.g., level, money, custom). Format: 'placeholder:required_value:operator' (e.g., '%player_level%:10:>') or JSON-like for complex.">ℹ️</span>
+                                        </label>
+                                        <div id="extraReqList"></div>
+                                        <button class="add-btn-small" onclick="addExtraReq()">+ Add Extra
+                                            Requirement</button>
+                                        
+                                    </div>
+
+                                    <!-- Actions on Buy -->
+                                    <div>
+                                        <label>Actions on Buy</label>
+                                        <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+                                            (Advanced: Commands/effects after purchase. Not implemented in UI yet.)
+                                        </p>
+                                    </div>
+
+                                    <div class="info-box info-box-tip">
+                                        <svg class="info-box-icon" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <div class="info-box-content">
+                                            <p class="info-box-text">
+                                                Requires <code>Vault</code> for economy/permissions and
+                                                <code>PlaceholderAPI</code> for placeholders like
+                                                <code>%vault_eco_balance%</code>.
+                                                Test placeholders in-game with
+                                                <code>/papi parse me %vault_eco_balance%</code>.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Actions Section -->
+                        <div class="collapsible-section">
+                            <div class="collapsible-header" onclick="toggleSection(this)">
+                                <span>⚡ Actions</span>
+                                <svg style="width: 20px; height: 20px; transition: transform 0.3s;" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </div>
+                            <div class="collapsible-content">
+                                <div class="info-box info-box-tip">
+                                    <svg class="info-box-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                    </svg>
+                                    <div class="info-box-content">
+                                        <div class="info-box-title">Information</div>
+                                        <p class="info-box-text"><a
+                                                href="https://ajneb97.gitbook.io/playerkits-2/actions"
+                                                target="_blank">Click here</a> to visit official documentation for
+                                            Actions.</p>
+                                    </div>
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 16px;">
+                                    <div>
+                                        <h4>Claim Actions (on success)</h4>
+                                        <div id="claimActionsList"></div>
+                                        <button class="add-btn-small" onclick="addAction('claim')">+ Add Claim
+                                            Action</button>
+                                    </div>
+                                    <div>
+                                        <h4>Error Actions (on failure)</h4>
+                                        <div id="errorActionsList"></div>
+                                        <button class="add-btn-small" onclick="addAction('error')">+ Add Error
+                                            Action</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- Right Panel -->
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <!-- Stats -->
+                    <div class="info-card">
+                        <h3>
+                            <svg style="display: inline; width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
+                            Kit Statistics
+                        </h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px;">
+                            <div class="stat-box">
+                                <span class="stat-number" id="totalItems">0</span>
+                                <span class="stat-label">Total Items</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-number" id="totalActions">0</span>
+                                <span class="stat-label">Actions</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- YAML Preview -->
+                    <div class="card">
+                        <h3>
+                            <svg style="display: inline; width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            </svg>
+                            YAML Preview
+                        </h3>
+                        <div class="yaml-preview custom-scrollbar" id="yamlPreview">
+                            # Configure your kit to see the preview
+                        </div>
+                        <button id="copyYamlBtn" class="btn" style="width: 100%; margin-top: 12px;">
+                            <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                            Copy YAML
+                        </button>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <button id="downloadBtn" class="btn btn-primary" style="width: 100%; padding: 16px;">
+                        <svg style="display: inline; width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Download Kit File
+                    </button>
+
+                    <button id="validateBtn" class="btn" style="width: 100%; padding: 16px;">
+                        <svg style="display: inline; width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Validate Configuration
+                    </button>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div style="padding: 32px; text-align: center; color: var(--text-muted); font-size: 13px;">
+                <p style="opacity: 0.8; margin: 8px 0;">Please read the <a href="https://ajneb97.gitbook.io/playerkits-2" style="color: var(--accent-light); text-decoration: underline"
+                        target="_blank">Official Documentation</a> for full & better information.</p>
+                <p style="opacity: 0.8; margin: 8px 0;">
+                    Made with <span class="heart">🤍</span> by
+                    <a href="https://hsinghhira.me" style="color: var(--accent-light); text-decoration: underline"
+                        target="_blank">Harman Singh Hira</a>
+                    in
+                    <a href="https://en.wikipedia.org/wiki/Aotearoa"
+                        style="color: var(--accent-light); text-decoration: underline" target="_blank">Aotearoa</a>
+                </p>
+                <p style="opacity: 0.6; margin: 16px 0 0 0; font-size: 11px;">
+                    Free and open-source • No data collection • Works offline
+                </p>
+            </div>
+        </div>
+
+        <!-- Quick Reference Modal -->
+        <div id="quickRefModal" class="hidden modal-overlay">
+            <div class="modal-content" style="max-width: 800px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                    <h3 style="margin: 0;">Quick Reference - PlayerKits 2</h3>
+                    <button onclick="closeModal('quickRefModal')"
+                        style="font-size: 24px; color: var(--text-muted); cursor: pointer; background: none; border: none;">✕</button>
+                </div>
+
+                <div style="display: grid; gap: 16px;">
+                    <!-- Materials -->
+                    <div class="info-card">
+                        <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">Material IDs</h4>
+                        <p style="font-size: 12px;">
+                            Latest: <a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html"
+                                target="_blank" style="color: var(--accent-light);">Spigot Materials</a><br>
+                            Legacy (1.8-1.12): <a href="https://helpch.at/docs/1.8/org/bukkit/Material.html"
+                                target="_blank" style="color: var(--accent-light);">Legacy Materials</a>
+                        </p>
+                    </div>
+
+                    <!-- Color Codes -->
+                    <div class="info-card">
+                        <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">Minecraft Color Codes</h4>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; font-size: 12px;">
+                            <p><code>&0-9, a-f</code> - Standard colors</p>
+                            <p><code>&l</code> - Bold</p>
+                            <p><code>&m</code> - Strikethrough</p>
+                            <p><code>&n</code> - Underline</p>
+                            <p><code>&o</code> - Italic</p>
+                            <p><code>&r</code> - Reset</p>
+                            <p><code>&#RRGGBB</code> - RGB/HEX colors (1.16+)</p>
+                        </div>
+                    </div>
+
+                    <!-- Enchantments -->
+                    <div class="info-card">
+                        <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">Common Enchantments</h4>
+                        <div style="display: grid; gap: 4px; font-size: 12px;">
+                            <p><code>DAMAGE_ALL;5</code> - Sharpness V</p>
+                            <p><code>PROTECTION_ENVIRONMENTAL;4</code> - Protection IV</p>
+                            <p><code>DIG_SPEED;5</code> - Efficiency V</p>
+                            <p><code>DURABILITY;3</code> - Unbreaking III</p>
+                            <p><code>FIRE_ASPECT;2</code> - Fire Aspect II</p>
+                            <p>Full list: <a
+                                    href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/enchantments/Enchantment.html"
+                                    target="_blank" style="color: var(--accent-light);">Enchantments</a></p>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="info-card">
+                        <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">Action Formats</h4>
+                        <div style="display: grid; gap: 4px; font-size: 12px;">
+                            <p><code>playsound: SOUND;volume;pitch</code></p>
+                            <p><code>console_command: command here</code></p>
+                            <p><code>player_command: command here</code></p>
+                            <p><code>message: &aYour message</code></p>
+                            <p><code>firework: colors:RED,BLUE type:BALL fade:WHITE power:1</code></p>
+                            <p><code>potion_effect: SPEED;1;600</code></p>
+                        </div>
+                    </div>
+
+                    <!-- Placeholders -->
+                    <div class="info-card">
+                        <h4 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">Common Placeholders</h4>
+                        <div style="display: grid; gap: 4px; font-size: 12px;">
+                            <p><code>%player%</code> - Player name</p>
+                            <p><code>%player_name%</code> - Display name</p>
+                            <p><code>%player_level%</code> - Player level</p>
+                            <p><code>%vault_eco_balance%</code> - Money balance</p>
+                            <p><code>%time%</code> - Remaining cooldown time</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Item Editor Modal -->
+        <div id="itemEditorModal" class="hidden modal-overlay">
+            <div class="modal-content" style="max-width: 800px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                    <h3 style="margin: 0;" id="itemEditorTitle">Add Item</h3>
+                    <button onclick="closeModal('itemEditorModal')"
+                        style="font-size: 24px; color: var(--text-muted); cursor: pointer; background: none; border: none;">✕</button>
+                </div>
+
+                <!-- Tabs -->
+                <div
+                    style="display: flex; gap: 12px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); flex-wrap: wrap;">
+                    <button class="tab active" onclick="switchItemTab('basic')">Basic</button>
+                    <button class="tab" onclick="switchItemTab('appearance')">Appearance</button>
+                    <button class="tab" onclick="switchItemTab('enchants')">Enchantments</button>
+                    <button class="tab" onclick="switchItemTab('advanced')">Advanced</button>
+                </div>
+
+                <div style="max-height: 500px; overflow-y: auto; padding-right: 10px;" class="custom-scrollbar">
+                    <!-- Basic Tab -->
+                    <div class="tab-content active" data-content="basic">
+                        <div style="display: flex; flex-direction: column; gap: 16px;">
+                            <div>
+                                <label>Material/ID</label>
+                                <input type="text" id="itemId" placeholder="DIAMOND_SWORD">
+                                <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">
+                                    <a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html"
+                                        target="_blank" style="color: var(--accent-light);">Browse materials</a>
+                                </p>
+                            </div>
+                            <div class="grid-3">
+                                <div>
+                                    <label>Amount</label>
+                                    <input type="number" id="itemAmount" value="1" min="1" max="64">
+                                </div>
+                                <div>
+                                    <label>Durability</label>
+                                    <input type="number" id="itemDurability" value="0" min="0">
+                                </div>
+                                <div>
+                                    <label>Preview Slot</label>
+                                    <input type="number" id="itemPreviewSlot" placeholder="0-53" min="0" max="53">
+                                </div>
+                            </div>
+                            <div>
+
+                                <div class="setting-item">
+                                    <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                        <span>Offhand</span>
+                                        <input type="checkbox" id="itemOffhand">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Appearance Tab -->
+                    <div class="tab-content" data-content="appearance">
+                        <div style="display: flex; flex-direction: column; gap: 16px;">
+                            <div>
+                                <label>Custom Name</label>
+                                <div style="display: flex; gap: 8px;">
+                                    <input type="text" id="itemName" placeholder="&eAwesome Sword" style="flex: 1;">
+                                    <button onclick="openTextToolsForItem('itemName')" class="btn">
+                                        <svg style="display: inline; width: 18px; height: 18px; vertical-align: middle;"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <label>Lore (Description)</label>
+                                <div id="itemLoreList"></div>
+                                <button class="add-btn-small" onclick="addItemLore()">+ Add Lore Line</button>
+                            </div>
+                            <div>
+                                <label>Custom Model Data</label>
+                                <input type="number" id="itemCustomModelData" value="0" min="0">
+                            </div>
+                            <div>
+                                <label>Leather Armor Color</label>
+                                <input type="number" id="itemColor" placeholder="8439583">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Enchantments Tab -->
+                    <div class="tab-content" data-content="enchants">
+                        <div style="display: flex; flex-direction: column; gap: 16px;">
+                            <div>
+                                <label>Enchantments</label>
+                                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">
+                                    Format: ENCHANT_NAME;LEVEL (e.g., DAMAGE_ALL;5)
+                                </p>
+                                <div id="itemEnchantsList"></div>
+                                <button class="add-btn-small" onclick="addItemEnchant()">+ Add Enchantment</button>
+                            </div>
+                            <div>
+                                <label>Item Flags</label>
+                                <div class="grid-2">
+                                    <div class="setting-item">
+                                        <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                            <span>Hide Enchants</span>
+                                            <input type="checkbox" class="item-flag" value="HIDE_ENCHANTS" />
+                                        </label>
+                                    </div>
+                                    <div class="setting-item">
+                                        <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                            <span>Hide Attributes</span>
+                                            <input type="checkbox" class="item-flag" value="HIDE_ATTRIBUTES" />
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="grid-2">
+                                    <div class="setting-item">
+                                        <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                            <span>Hide Unbreakable</span>
+                                            <input type="checkbox" class="item-flag" value="HIDE_UNBREAKABLE" />
+                                        </label>
+                                    </div>
+                                    <div class="setting-item">
+                                        <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                            <span> Hide Destroys</span>
+                                            <input type="checkbox" class="item-flag" value="HIDE_DESTROYS" />
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="grid-2">
+                                    <div class="setting-item">
+                                        <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                            <span>Hide Placed On</span>
+                                            <input type="checkbox" class="item-flag" value="HIDE_PLACED_ON" />
+                                        </label>
+                                    </div>
+                                    <div class="setting-item">
+                                        <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                            <span> Hide Potion Effects</span>
+                                            <input type="checkbox" class="item-flag" value="HIDE_POTION_EFFECTS" />
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Tab -->
+                    <div class="tab-content" data-content="advanced">
+                        <div style="display: flex; flex-direction: column; gap: 16px;">
+                            <div>
+                                <label>Skull Data (Player Heads)</label>
+                                <div class="grid-2">
+                                    <div>
+                                        <label style="font-size: 12px;">Owner (%player% or username)</label>
+                                        <input type="text" id="skullOwner" placeholder="%player%">
+                                    </div>
+                                    <div>
+                                        <label style="font-size: 12px;">UUID (optional)</label>
+                                        <input type="text" id="skullId" placeholder="uuid">
+                                    </div>
+                                </div>
+                                <label style="font-size: 12px; margin-top: 8px;">Texture (Base64)</label>
+                                <textarea id="skullTexture" rows="3"
+                                    placeholder="eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy..."
+                                    style="font-family: 'Courier New', monospace; font-size: 11px;"></textarea>
+                                <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">
+                                    Get textures from <a href="https://minecraft-heads.com" target="_blank"
+                                        style="color: var(--accent-light);">minecraft-heads.com</a>
+                                </p>
+                            </div>
+                            <div>
+                                <label>Armor Trim (1.20+)</label>
+                                <div class="grid-2">
+                                    <div>
+                                        <label style="font-size: 12px;">Pattern</label>
+                                        <input type="text" id="trimPattern" placeholder="ward">
+                                    </div>
+                                    <div>
+                                        <label style="font-size: 12px;">Material</label>
+                                        <input type="text" id="trimMaterial" placeholder="redstone">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Hide Tooltip (1.20.6+)</span>
+                                    <input type="checkbox" id="hideTooltip">
+                                </label>
+                            </div>
+                            <div>
+                                <label>NBT Data</label>
+                                <textarea id="itemNbt" rows="2" placeholder="Unbreakable|true|boolean"
+                                    style="font-family: 'Courier New', monospace; font-size: 11px;"></textarea>
+                                <p style="font-size: 11px; color: var(--text-muted); margin-top: 4px;">
+                                    Format: key|value|type (Only 1.8-1.20.4)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div
+                    style="display: flex; gap: 8px; margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                    <button id="saveItemBtn" class="btn btn-primary" style="flex: 1; padding: 12px;">Save Item</button>
+                    <button onclick="closeModal('itemEditorModal')" class="btn"
+                        style="flex: 1; padding: 12px;">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Text Tools Modal -->
+        <div id="textToolsModal" class="hidden modal-overlay">
+            <div class="modal-content">
+                <h3 style="display: flex; align-items: center; margin-bottom: 24px;">
+                    <svg style="width: 20px; height: 20px; margin-right: 8px;" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                    </svg>
+                    Text Tools
+                </h3>
+
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                    <div>
+                        <label>Text Input</label>
+                        <input type="text" id="textToolsInput" placeholder="Enter your text here"
+                            oninput="updateTextPreview()">
+                    </div>
+
+                    <div class="card" style="padding: 16px; border: 2px solid rgba(255, 255, 255, 0.1);">
+                        <div class="setting-item">
+                            <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                <span>RGB Gradient Colors</span>
+                                <input type="checkbox" id="enableRGB" onchange="updateTextPreview()">
+                            </label>
+                        </div>
+                        <div id="rgbControls" style="display: grid; gap: 12px; margin-top: 12px;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                                <div>
+                                    <label style="font-size: 12px;">Start Color</label>
+                                    <div style="display: flex; gap: 4px;">
+                                        <input type="color" id="rgbStartColor" value="#00CED1"
+                                            style="width: 40px; height: 40px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 4px; cursor: pointer;"
+                                            onchange="syncColorInputs('start'); updateTextPreview()">
+                                        <input type="text" id="rgbStartHex" value="#00CED1"
+                                            style="flex: 1; font-size: 12px;"
+                                            oninput="syncHexToColor('start'); updateTextPreview()">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label style="font-size: 12px;">End Color</label>
+                                    <div style="display: flex; gap: 4px;">
+                                        <input type="color" id="rgbEndColor" value="#87CEEB"
+                                            style="width: 40px; height: 40px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 4px; cursor: pointer;"
+                                            onchange="syncColorInputs('end'); updateTextPreview()">
+                                        <input type="text" id="rgbEndHex" value="#87CEEB"
+                                            style="flex: 1; font-size: 12px;"
+                                            oninput="syncHexToColor('end'); updateTextPreview()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="padding: 16px; border: 2px solid rgba(255, 255, 255, 0.1);">
+                        <div class="setting-item">
+                            <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                <span>Fancy Small Caps Font</span>
+                                <input type="checkbox" id="enableFancy" onchange="updateTextPreview()">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="card" style="padding: 16px; background: rgba(0, 0, 0, 0.3);">
+                        <div id="textPreview" style="font-size: 18px; font-weight: 600; color: var(--text-primary);">
+                            Enter text to see preview...
+                        </div>
+                    </div>
+
+                    <details style="margin-top: 8px;">
+                        <summary style="cursor: pointer; font-size: 12px; color: var(--text-muted);">Show Minecraft Code
+                        </summary>
+                        <code id="textCode"
+                            style="font-size: 11px; color: var(--accent-light); word-break: break-all; display: block; margin-top: 8px;">
+                        Enter text to see preview...
+                    </code>
+                    </details>
+
+                    <div style="display: flex; gap: 8px;">
+                        <button id="applyTextBtn" class="btn btn-primary" style="flex: 1; padding: 16px;">Apply</button>
+                        <button onclick="closeModal('textToolsModal')" class="btn"
+                            style="flex: 1; padding: 16px;">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Import Modal -->
+        <div id="importModal" class="hidden modal-overlay">
+            <div class="modal-content" style="max-width: 640px;">
+                <h3>Import Kit Configuration</h3>
+                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+                    Paste your existing kit YAML configuration here
+                </p>
+                <textarea id="importText" placeholder="Paste YAML here..."
+                    style="height: 300px; font-family: 'Courier New', monospace; font-size: 13px;"></textarea>
+                <div style="display: flex; gap: 8px; margin-top: 16px;">
+                    <button id="importConfirmBtn" class="btn btn-primary"
+                        style="flex: 1; padding: 16px;">Import</button>
+                    <button onclick="closeModal('importModal')" class="btn"
+                        style="flex: 1; padding: 16px;">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+</body>
+
+</html>
