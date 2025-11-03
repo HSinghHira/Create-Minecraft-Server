@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Velocity Config Generator - TOML Editor</title>
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>💎</text></svg>" />
+    <meta name="description" content="Generate and edit Velocity proxy configuration files (velocity.toml)" />
+    <meta name="keywords" content="Velocity, Minecraft, proxy, configuration, TOML, generator" />
+    <meta name="author" content="Harman Singh Hira" />
+    <meta name="robots" content="index, follow" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="mb-3 text-center">
+            <div class="icon-container">
+                
+<svg style="width: 64px; height: 64px; color: var(--accent-light)" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
+                            </svg>
+
+            </div>
+            <h1>Velocity Config Generator</h1>
+            <p class="header-meta">Generate and customize your velocity.toml configuration file</p>
+        </div>
+
+        <!-- Main Content Card -->
+        <div class="card">
+            <!-- Action Buttons Row -->
+            <div
+                style="display: flex; gap: 8px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="generateConfig()">
+                    <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Generate Config
+                </button>
+                <button class="btn" onclick="downloadConfig()">
+                    <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    Download TOML
+                </button>
+                <button class="btn" onclick="resetToDefaults()">
+                    <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    Reset to Defaults
+                </button>
+                <button class="btn" onclick="openImportModal()">
+                    <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    Import TOML
+                </button>
+                <button class="btn" onclick="showValidationWarnings()">
+                    <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Validate
+                </button>
+            </div>
+
+            <div class="grid">
+                <!-- Left Panel -->
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <!-- Tabs -->
+                    <div class="tabs">
+                        <button class="tab active" onclick="switchTab('basic')">
+                            <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            Basic
+                        </button>
+                        <button class="tab" onclick="switchTab('servers')">
+                            <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+                            </svg>
+                            Servers
+                        </button>
+                        <button class="tab" onclick="switchTab('advanced')">
+                            <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                            </svg>
+                            Advanced
+                        </button>
+                        <button class="tab" onclick="switchTab('query')">
+                            <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                            Query
+                        </button>
+                    </div>
+
+                    <!-- Tab Content -->
+                    <div class="tab-content active" data-content="basic">
+                        <div class="card">
+                            <h3>Basic Configuration</h3>
+
+                            <div class="setting-item">
+                                <label>Bind Address & Port</label>
+                                <input type="text" id="bind" value="0.0.0.0:25565">
+                                <p class="help-text">IP address and port the proxy should bind to</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label>MOTD (Message of the Day)</label>
+                                <input type="text" id="motd" value="<#09add3>A Velocity Server">
+                                <p class="help-text">Server list message (MiniMessage format only)</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label>Show Max Players</label>
+                                <input type="number" id="showMaxPlayers" value="500">
+                                <p class="help-text">Maximum player count shown in server list</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Online Mode</span>
+                                    <input type="checkbox" id="onlineMode" checked>
+                                </label>
+                                <p class="help-text">Authenticate players with Mojang (recommended: enabled)</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Force Key Authentication</span>
+                                    <input type="checkbox" id="forceKeyAuth" checked>
+                                </label>
+                                <p class="help-text">Enforce new public key security standard</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Prevent Client Proxy Connections</span>
+                                    <input type="checkbox" id="preventClientProxy">
+                                </label>
+                                <p class="help-text">Kick players if ISP differs from Mojang's authentication</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label>Player Info Forwarding Mode</label>
+                                <select id="forwardingMode">
+                                    <option value="none">None - No forwarding</option>
+                                    <option value="legacy">Legacy - BungeeCord format (MC 1.12-)</option>
+                                    <option value="bungeeguard">BungeeGuard - With BungeeGuard plugin</option>
+                                    <option value="modern">Modern - Velocity native (MC 1.13+)</option>
+                                </select>
+                                <p class="help-text">How to forward player data to backend servers</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label>Forwarding Secret File</label>
+                                <input type="text" id="forwardingSecret" value="forwarding.secret">
+                                <p class="help-text">File containing unique secret for modern/BungeeGuard forwarding</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Announce Forge</span>
+                                    <input type="checkbox" id="announceForge">
+                                </label>
+                                <p class="help-text">Announce Forge support (enable for modded servers)</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Kick Existing Players</span>
+                                    <input type="checkbox" id="kickExisting">
+                                </label>
+                                <p class="help-text">Kick online player if duplicate connection attempt is made</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label>Ping Passthrough</label>
+                                <select id="pingPassthrough">
+                                    <option value="disabled">Disabled - Use velocity.toml settings</option>
+                                    <option value="mods">Mods - Pass mod list only</option>
+                                    <option value="description">Description - Pass description and mod list</option>
+                                    <option value="all">All - Use backend response completely</option>
+                                </select>
+                                <p class="help-text">How to handle server list ping requests</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Sample Players in Ping</span>
+                                    <input type="checkbox" id="samplePlayers">
+                                </label>
+                                <p class="help-text">Show online player sample when hovering over player count</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Enable Player Address Logging</span>
+                                    <input type="checkbox" id="enableAddressLog" checked>
+                                </label>
+                                <p class="help-text">Log player IP addresses (disable to hide IPs in logs)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" data-content="servers">
+                        <div class="card">
+                            <h3>Server Configuration</h3>
+
+                            <div class="info-box info-box-info">
+                                <svg class="info-box-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <div class="info-box-content">
+                                    <p class="info-box-text">Configure backend servers and connection order. Each server
+                                        needs a name and IP:PORT address.</p>
+                                </div>
+                            </div>
+
+                            <h3>Backend Servers</h3>
+                            <div id="serversList"></div>
+                            <button class="btn btn-primary" onclick="addServer()" style="margin-top: 12px;">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4v16m8-8H4" />
+                                </svg>
+                                Add Server
+                            </button>
+
+                            <h3 style="margin-top: 32px;">Try Order</h3>
+                            <p class="help-text">Order in which servers are tried when a player logs in or is kicked</p>
+                            <div id="tryOrderList"></div>
+
+                            <h3 style="margin-top: 32px;">Forced Hosts</h3>
+                            <p class="help-text">Route specific domains to specific servers</p>
+                            <div id="forcedHostsList"></div>
+                            <button class="btn btn-primary" onclick="addForcedHost()" style="margin-top: 12px;">
+                                <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4v16m8-8H4" />
+                                </svg>
+                                Add Forced Host
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" data-content="advanced">
+                        <div class="card">
+                            <h3>Advanced Settings</h3>
+
+                            <div class="grid-2">
+                                <div class="setting-item">
+                                    <label>Compression Threshold</label>
+                                    <input type="number" id="compressionThreshold" value="256">
+                                    <p class="help-text">Packet size before compression (0 = compress all, -1 = disable)
+                                    </p>
+                                </div>
+
+                                <div class="setting-item">
+                                    <label>Compression Level</label>
+                                    <input type="number" id="compressionLevel" value="-1" min="-1" max="9">
+                                    <p class="help-text">Compression amount (0-9, -1 = default level 6)</p>
+                                </div>
+                            </div>
+
+                            <div class="grid-2">
+                                <div class="setting-item">
+                                    <label>Login Rate Limit (ms)</label>
+                                    <input type="number" id="loginRateLimit" value="3000">
+                                    <p class="help-text">Time between connections from same client (0 = disabled)</p>
+                                </div>
+
+                                <div class="setting-item">
+                                    <label>Connection Timeout (ms)</label>
+                                    <input type="number" id="connectionTimeout" value="5000">
+                                    <p class="help-text">Timeout for connection attempts</p>
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <label>Read Timeout (ms)</label>
+                                <input type="number" id="readTimeout" value="30000">
+                                <p class="help-text">Timeout for reading from connections</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                    <span>HAProxy Protocol</span>
+                                    <input type="checkbox" id="haproxyProtocol">
+                                </label>
+                                <p class="help-text">Enable HAProxy PROXY protocol compatibility</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                    <span>TCP Fast Open</span>
+                                    <input type="checkbox" id="tcpFastOpen">
+                                </label>
+                                <p class="help-text">Enable TCP fast open (requires Linux)</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                    <span>BungeeCord Plugin Message Channel</span>
+                                    <input type="checkbox" id="bungeePluginChannel" checked>
+                                </label>
+                                <p class="help-text">Enable BungeeCord plugin messaging support</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Show Ping Requests</span>
+                                    <input type="checkbox" id="showPingRequests">
+                                </label>
+                                <p class="help-text">Log ping requests from clients</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Failover on Unexpected Disconnect</span>
+                                    <input type="checkbox" id="failoverUnexpected" checked>
+                                </label>
+                                <p class="help-text">Attempt fallback when player loses connection unexpectedly</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Announce Proxy Commands</span>
+                                    <input type="checkbox" id="announceCommands" checked>
+                                </label>
+                                <p class="help-text">Declare proxy commands to 1.13+ clients</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Log Command Executions</span>
+                                    <input type="checkbox" id="logCommands">
+                                </label>
+                                <p class="help-text">Enable logging of command executions</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Log Player Connections</span>
+                                    <input type="checkbox" id="logConnections" checked>
+                                </label>
+                                <p class="help-text">Log player connect/disconnect/switch events</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Accepts Transfers</span>
+                                    <input type="checkbox" id="acceptsTransfers">
+                                </label>
+                                <p class="help-text">Accept players transferred via Transfer packet (MC 1.20.5+)</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Enable SO_REUSEPORT</span>
+                                    <input type="checkbox" id="enableReusePort">
+                                </label>
+                                <p class="help-text">Better scaling on multicore systems (requires Linux/macOS)</p>
+                            </div>
+
+                            <div class="grid-2">
+                                <div class="setting-item">
+                                    <label>Command Rate Limit (ms)</label>
+                                    <input type="number" id="commandRateLimit" value="50">
+                                    <p class="help-text">Time between commands (default 50ms = 20 commands/sec)</p>
+                                </div>
+
+                                <div class="setting-item">
+                                    <label>Tab Complete Rate Limit (ms)</label>
+                                    <input type="number" id="tabCompleteRateLimit" value="10">
+                                    <p class="help-text">Time between tab completions</p>
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Forward Commands if Rate Limited</span>
+                                    <input type="checkbox" id="forwardRateLimited" checked>
+                                </label>
+                                <p class="help-text">Forward rate-limited commands to backend server</p>
+                            </div>
+
+                            <div class="grid-2">
+                                <div class="setting-item">
+                                    <label>Kick After Rate Limited Commands</label>
+                                    <input type="number" id="kickAfterRateLimited" value="0">
+                                    <p class="help-text">Commands allowed after rate limit before kick (0 = disabled)</p>
+                                </div>
+
+                                <div class="setting-item">
+                                    <label>Kick After Rate Limited Tab Completes</label>
+                                    <input type="number" id="kickAfterTabRateLimited" value="0">
+                                    <p class="help-text">Tab completes allowed after rate limit before kick (0 = disabled)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" data-content="query">
+                        <div class="card">
+                            <h3>Query Configuration</h3>
+
+                            <div class="info-box info-box-warning">
+                                <svg class="info-box-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                                <div class="info-box-content">
+                                    <p class="info-box-text">Query protocol is used by server list websites. Enable only
+                                        if needed.</p>
+                                </div>
+                            </div>
+
+                            <div class="setting-item">
+                                <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Enable Query</span>
+                                    <input type="checkbox" id="queryEnabled">
+                                </label>
+                                <p class="help-text">Enable GameSpy 4 query protocol responses</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label>Query Port</label>
+                                <input type="number" id="queryPort" value="25565">
+                                <p class="help-text">Port for query protocol (usually same as server port)</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label>Query Map Name</label>
+                                <input type="text" id="queryMap" value="Velocity">
+                                <p class="help-text">Map name reported to query services</p>
+                            </div>
+
+                            <div class="setting-item">
+                                <label style="display: flex; align-items: center; cursor: pointer; margin: 0;">
+                                    <span>Show Plugins in Query</span>
+                                    <input type="checkbox" id="queryShowPlugins">
+                                </label>
+                                <p class="help-text">Display plugins in query response</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel -->
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <!-- Info Card -->
+                    <div class="info-card">
+                        <h3>
+                            <svg style="display: inline; width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            Quick Tips
+                        </h3>
+                        <p><strong>💡 Tip:</strong> Press <kbd>Ctrl</kbd>+<kbd>S</kbd> to generate config</p>
+                        <p><strong>💡 Tip:</strong> Press <kbd>Ctrl</kbd>+<kbd>D</kbd> to download</p>
+                        <p><strong>💡 Tip:</strong> Your config auto-saves every 30 seconds</p>
+                        <p><strong>💡 Tip:</strong> Use "Validate" to check for configuration issues</p>
+                    </div>
+
+                    <!-- Generated Config Output -->
+                    <div class="card">
+                        <h3>
+                            <svg style="display: inline; width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Generated Configuration
+                        </h3>
+                        <div class="code-output" id="configOutput"
+                            style="max-height: 400px; overflow-y: auto; margin-bottom: 16px;"># Click "Generate Config" to see your velocity.toml configuration here</div>
+                        <button class="btn btn-primary" onclick="copyToClipboard()" style="width: 100%;">
+                            <svg style="display: inline; width: 18px; height: 18px; margin-right: 6px; vertical-align: middle;"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                            Copy to Clipboard
+                        </button>
+                    </div>
+
+                    <!-- Status Card -->
+                    <div class="card">
+                        <h3>
+                            <svg style="display: inline; width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                            </svg>
+                            Status
+                        </h3>
+                        <p style="font-size: 14px; margin: 8px 0;">
+                            <strong>Servers:</strong>
+                            <span id="serverCount" style="color: var(--accent-light); font-weight: 700;">3</span>
+                        </p>
+                        <p style="font-size: 14px; margin: 8px 0;">
+                            <strong>Try Order:</strong>
+                            <span id="tryOrderCount" style="color: var(--accent-light); font-weight: 700;">1</span>
+                        </p>
+                        <p style="font-size: 14px; margin: 8px 0;">
+                            <strong>Forced Hosts:</strong>
+                            <span id="forcedHostCount" style="color: var(--accent-light); font-weight: 700;">3</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="padding: 32px; text-align: center; color: var(--text-muted); font-size: 13px;">
+            <p style="opacity: 0.8; margin: 8px 0;">Velocity Proxy Configuration Generator - velocity.toml Editor</p>
+            <p style="opacity: 0.8; margin: 8px 0;">Create professional Velocity configurations with ease</p>
+            <p style="opacity: 0.8; margin: 8px 0;">
+                Made with <span class="heart">🤍</span> by
+                <a href="https://hsinghhira.me" style="color: var(--accent-light); text-decoration: underline"
+                    target="_blank">Harman Singh Hira</a>
+                in
+                <a href="https://en.wikipedia.org/wiki/Aotearoa"
+                    style="color: var(--accent-light); text-decoration: underline" target="_blank">Aotearoa</a>
+            </p>
+            <p style="opacity: 0.6; margin: 16px 0 0 0; font-size: 11px;">
+                Free and open-source • No data collection • Works offline
+            </p>
+        </div>
+    </div>
+
+    <!-- Import Modal -->
+    <div id="importModal" class="hidden modal-overlay">
+        <div class="modal-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <h3 style="margin: 0; display: flex; align-items: center;">
+                    <svg style="width: 20px; height: 20px; margin-right: 8px; color: var(--accent-light);" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    Import TOML Configuration
+                </h3>
+                <button onclick="closeImportModal()"
+                    style="font-size: 24px; color: var(--text-muted); cursor: pointer; background: none; border: none;">✕</button>
+            </div>
+            <p class="help-text" style="margin-bottom: 16px;">Paste your velocity.toml content below to load settings
+            </p>
+            <textarea id="importText" style="height: 300px; font-family: monospace; font-size: 13px;"
+                placeholder="Paste your velocity.toml content here..."></textarea>
+            <div style="display: flex; gap: 8px; margin-top: 16px;">
+                <button class="btn btn-primary" onclick="importConfig()" style="flex: 1; padding: 16px;">Import</button>
+                <button class="btn" onclick="closeImportModal()" style="flex: 1; padding: 16px;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

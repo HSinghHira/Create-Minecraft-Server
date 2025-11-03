@@ -579,12 +579,7 @@ code {
            ALERT/NOTIFICATION COMPONENT
            ============================================ */
 .alert {
-    padding: 12px 16px;
-    border-radius: 8px;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display:none;
 }
 
 .alert-success {
@@ -701,27 +696,6 @@ code {
     margin: 0;
     font-size: 12px;
     color: var(--text-muted);
-}
-
-.stat-box {
-    background: linear-gradient(135deg, rgba(113, 90, 90, 0.2), rgba(211, 218, 217, 0.2));
-    border: 2px solid rgba(211, 218, 217, 0.3);
-    padding: 16px;
-    border-radius: 8px;
-    text-align: center;
-}
-
-.stat-number {
-    font-size: 32px;
-    font-weight: 700;
-    color: var(--accent-light);
-    display: block;
-}
-
-.stat-label {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 4px;
 }
 
 .help-text {
